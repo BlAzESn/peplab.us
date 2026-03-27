@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PepLab.us — Premium Research Peptides | 99%+ Purity, Third-Party Tested</title>
+  <meta name="description" content="PepLab.us is a leading supplier of high-purity research peptides. Every batch is third-party tested with certificates of analysis. 99%+ purity guaranteed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- AGE GATE -->
+  <div class="age-gate-overlay" id="ageGate">
+    <div class="age-gate-header">
+      <div class="age-gate-label">Welcome to</div>
+      <div class="age-gate-logo">PEPLAB<span>.US</span></div>
+      <div class="age-gate-subtitle">Research</div>
+    </div>
+    <div class="age-gate-card">
+      <div class="age-gate-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+        Age Verification Required
+      </div>
+      <h2>You Must Be 21+ to Enter</h2>
+      <p class="age-gate-desc">By entering, you accept our Terms and confirm you are of legal age to view research compounds in your jurisdiction.</p>
+      <div class="age-gate-divider"></div>
+      <div class="age-gate-stats">
+        <div class="age-gate-stat">
+          <span class="age-gate-stat-value">99%+</span>
+          <span class="age-gate-stat-label">Purity</span>
+        </div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat">
+          <span class="age-gate-stat-value">Lab</span>
+          <span class="age-gate-stat-label">Certified</span>
+        </div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat">
+          <span class="age-gate-stat-value">Research</span>
+          <span class="age-gate-stat-label">Use Only</span>
+        </div>
+      </div>
+      <div class="age-gate-divider"></div>
+      <p class="age-gate-disclaimer">All compounds are sold for research and laboratory use only. Products are not for human consumption or medical use.</p>
+      <label class="age-gate-remember">
+        <input type="checkbox" id="ageRemember">
+        Remember for 30 days
+      </label>
+      <div class="age-gate-buttons">
+        <button class="age-gate-btn-deny" id="ageDeny">I Am Under 21</button>
+        <button class="age-gate-btn-enter" id="ageEnter">Enter Site</button>
+      </div>
+    </div>
+    <div class="age-gate-footer">&copy; 2026 PepLab.us &bull; For Research Purposes Only</div>
+  </div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="container">
+      <span>Free shipping on orders $250+ &nbsp;&middot;&nbsp; For research use only</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">PepLab<span>.us</span></a>
+      <nav class="nav-links" id="nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="test-results.html">Test Results</a>
+        <a href="research-guide.html">Research Guide</a>
+      </nav>
+      <div class="header-actions">
+        <a href="shop.html" class="nav-cta">Shop Now</a>
+      </div>
+      <button class="mobile-toggle" id="menuBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="">
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+      <source src="assets/hero-bg.webm" type="video/webm">
+    </video>
+    <div class="hero-content">
+      <div class="hero-label">Premium Research Compounds</div>
+      <h1>PEPLAB<span class="gradient">.US</span></h1>
+      <p>Where quality and clarity converge. Laboratory-grade research compounds with 99%+ purity, trusted by researchers worldwide.</p>
+      <div class="hero-buttons">
+        <a href="shop.html" class="btn-primary">Shop Now &rarr;</a>
+        <a href="about.html" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+    <!-- Hero Stats Bar -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-value">99%+</span>
+        <span class="hero-stat-label">Purity Verified</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">$250+</span>
+        <span class="hero-stat-label">Free Shipping</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">US LAB</span>
+        <span class="hero-stat-label">Based &amp; Tested</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR PRODUCTS -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <div class="label">Our Collection</div>
+          <h2>Popular Products</h2>
+        </div>
+        <a href="shop.html" class="view-all-link">View All &rarr;</a>
+      </div>
+      <div class="product-grid product-grid-4">
+
+        <div class="product-card">
+          <a href="product-cjc-ipa-blend.html" class="product-image-link">
+            <div class="product-image">
+              <img src="assets/products/cjc1295-ipamorelin-blend.png" alt="CJC-1295 No DAC + Ipamorelin Blend" class="product-photo" loading="lazy">
+              <div class="product-tags"><span class="tag">Compounds</span><span class="tag">Vials</span></div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>CJC-1295 No DAC + Ipamorelin Blend</h3>
+            <div class="product-footer">
+              <span class="product-price">$65.00</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <a href="product-klow.html" class="product-image-link">
+            <div class="product-image">
+              <img src="assets/products/klow-blend-80mg.png" alt="KLOW 80mg Blend" class="product-photo" loading="lazy">
+              <div class="product-tags"><span class="tag">Compounds</span><span class="tag">Vials</span></div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>KLOW 80mg (GLP/GIP + GHK-Cu Blend)</h3>
+            <div class="product-footer">
+              <span class="product-price">$107.50</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <a href="product-wolverine.html" class="product-image-link">
+            <div class="product-image">
+              <img src="assets/products/wolverine-blend.png" alt="Wolverine Blend" class="product-photo" loading="lazy">
+              <div class="product-tags"><span class="tag">Compounds</span><span class="tag">Vials</span></div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>Wolverine (BPC157/TB500 Blend)</h3>
+            <div class="product-footer">
+              <span class="product-price">$69.99</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <a href="product-bacwater.html" class="product-image-link">
+            <div class="product-image">
+              <div class="product-tags"><span class="tag">Accessories</span></div>
+              <div class="product-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.75" stroke="currentColor" width="80" height="80"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714a2.25 2.25 0 0 0 .659 1.591L19 14.5M14.25 3.104c.251.023.501.05.75.082M19 14.5l-1.46 1.46a2.25 2.25 0 0 1-1.591.659H8.051a2.25 2.25 0 0 1-1.591-.659L5 14.5m14 0V5.846a2.25 2.25 0 0 0-1.172-1.976l-.348-.192M5 14.5V5.846a2.25 2.25 0 0 1 1.172-1.976l.348-.192"/></svg>
+                <span>Photo Coming Soon</span>
+              </div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>Bacteriostatic Water (30mL)</h3>
+            <div class="product-footer">
+              <span class="product-price">$14.00</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <a href="product-glp3rt.html" class="product-image-link">
+            <div class="product-image">
+              <img src="assets/products/glp3rt.png" alt="GLP-3 RT" class="product-photo" loading="lazy">
+              <div class="product-tags"><span class="tag">Compounds</span><span class="tag">Oral</span></div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>GLP-3 RT</h3>
+            <div class="product-footer">
+              <span class="product-price">$69.99</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <a href="product-ss31.html" class="product-image-link">
+            <div class="product-image">
+              <img src="assets/products/ss31-5mg.png" alt="SS-31 5mg" class="product-photo" loading="lazy">
+              <div class="product-tags"><span class="tag">Compounds</span><span class="tag">Vials</span></div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>SS-31 5mg</h3>
+            <div class="product-footer">
+              <span class="product-price">$60.00</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <a href="product-lcarnitine.html" class="product-image-link">
+            <div class="product-image">
+              <img src="assets/products/l-carnitine-500mg.png" alt="L-Carnitine 500mg" class="product-photo" loading="lazy">
+              <div class="product-tags"><span class="tag">Compounds</span><span class="tag">Vials</span></div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>L-Carnitine 500mg</h3>
+            <div class="product-footer">
+              <span class="product-price">$45.00</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <a href="product-cjc1295nodac.html" class="product-image-link">
+            <div class="product-image">
+              <img src="assets/products/cjc1295-nodac-5mg.png" alt="CJC 1295 No DAC 5mg" class="product-photo" loading="lazy">
+              <div class="product-tags"><span class="tag">Compounds</span><span class="tag">Vials</span></div>
+            </div>
+          </a>
+          <div class="product-info">
+            <h3>CJC 1295 No DAC 5mg</h3>
+            <div class="product-footer">
+              <span class="product-price">$45.00</span>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div style="text-align:center; margin-top:48px;">
+        <a href="shop.html" class="btn-outline">View All Products &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / TRUST SPLIT -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="split-layout">
+        <div class="split-text">
+          <div class="label">About Us</div>
+          <h2>Premium Research<br><span class="text-accent">You Can Trust</span></h2>
+          <p>PepLab.us is a leading supplier of research-use-only compounds, committed to delivering exceptional quality at competitive prices.</p>
+          <p>We pride ourselves on fast, reliable shipping — with orders shipped the same day. Trusted by researchers nationwide to provide high-quality research compounds with 99%+ purity.</p>
+          <div class="split-stats">
+            <div class="split-stat">
+              <span class="split-stat-value">99%+</span>
+              <span class="split-stat-label">Purity</span>
+            </div>
+            <div class="split-stat">
+              <span class="split-stat-value">Same Day</span>
+              <span class="split-stat-label">Shipping</span>
+            </div>
+            <div class="split-stat">
+              <span class="split-stat-value">US Lab</span>
+              <span class="split-stat-label">Based</span>
+            </div>
+          </div>
+          <a href="about.html" class="btn-outline">Learn More &rarr;</a>
+        </div>
+        <div class="split-visual">
+          <div class="purity-badge-card">
+            <div class="purity-badge-value">99%</div>
+            <div class="purity-badge-text">Purity Guaranteed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SPLIT -->
+  <section class="section">
+    <div class="container">
+      <div class="split-layout split-layout-reverse">
+        <div class="split-image-placeholder">
+          <img src="assets/lab-trust.png" alt="HPLC lab testing of peptide vial">
+        </div>
+        <div class="split-text">
+          <h2>Here's What You<br><span class="text-accent">Should Know</span></h2>
+          <div class="faq-list-inline">
+            <div class="faq-item">
+              <button class="faq-question"><span>What are research compounds and how are they used?</span><span class="icon">+</span></button>
+              <div class="faq-answer"><div class="faq-answer-inner">All PepLab.us products are sold exclusively for in-vitro laboratory research and scientific study. They are not approved for human or veterinary use.</div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question"><span>Are your compounds tested for purity?</span><span class="icon">+</span></button>
+              <div class="faq-answer"><div class="faq-answer-inner">Yes. Every batch is tested by independent third-party laboratories using HPLC for purity and Mass Spectrometry for identity. We maintain a minimum 99% purity standard.</div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question"><span>Are your products legal to purchase?</span><span class="icon">+</span></button>
+              <div class="faq-answer"><div class="faq-answer-inner">Yes. Research peptides are legal to purchase in the United States for laboratory and research purposes. They are not intended for human consumption.</div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question"><span>Who can order from PepLab.us?</span><span class="icon">+</span></button>
+              <div class="faq-answer"><div class="faq-answer-inner">Anyone 18 years or older may purchase from PepLab.us. All customers agree that products will be used exclusively for research purposes.</div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question"><span>What is your shipping policy?</span><span class="icon">+</span></button>
+              <div class="faq-answer"><div class="faq-answer-inner">Orders placed before 2PM EST ship the same business day. Standard shipping takes 2-3 business days. Free shipping on orders over $250.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THIRD-PARTY VERIFIED BANNER -->
+  <section class="verified-banner">
+    <div class="container">
+      <h2>Third-Party Verified<br><span class="text-accent-light">Every Single Batch</span></h2>
+      <p>Every compound in our catalog is independently tested by accredited third-party laboratories. Certificates of Analysis available for all products.</p>
+      <a href="shop.html" class="btn-outline-light">Shop Collection &rarr;</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">PEPLAB<span>.US</span></div>
+          <p>Premium research compounds with 99%+ purity. Third-party tested and trusted by researchers worldwide. All products are for laboratory and research use only.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <a href="shop.html">Shop Collection</a>
+          <a href="about.html">About Us</a>
+          <a href="test-results.html">COAs &amp; Test Results</a>
+          <a href="research-guide.html">Research Guide</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="refund.html">Return &amp; Refund</a>
+          <a href="shipping.html">Shipping Policy</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="mailto:contact@peplabs.us">contact@peplabs.us</a>
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        <p>For research use only. The products available on this website are intended exclusively for in-vitro research and laboratory use. The materials sold by PepLab.us are not for human consumption. All products are not approved by the FDA. Products on the site are not intended to diagnose, treat, cure, or prevent any disease. They are intended for in-vitro studies and research purposes only.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 PepLab.us. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

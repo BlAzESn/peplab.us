@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — PepLab.us</title>
+  <meta name="description" content="Frequently asked questions about PepLab.us research peptides, ordering, shipping, and quality testing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- AGE GATE -->
+  <div class="age-gate-overlay" id="ageGate">
+    <div class="age-gate-header">
+      <div class="age-gate-label">Welcome to</div>
+      <div class="age-gate-logo">PEPLAB<span>.US</span></div>
+      <div class="age-gate-subtitle">Research</div>
+    </div>
+    <div class="age-gate-card">
+      <div class="age-gate-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+        Age Verification Required
+      </div>
+      <h2>You Must Be 21+ to Enter</h2>
+      <p class="age-gate-desc">By entering, you accept our Terms and confirm you are of legal age to view research compounds in your jurisdiction.</p>
+      <div class="age-gate-divider"></div>
+      <div class="age-gate-stats">
+        <div class="age-gate-stat">
+          <span class="age-gate-stat-value">99%+</span>
+          <span class="age-gate-stat-label">Purity</span>
+        </div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat">
+          <span class="age-gate-stat-value">Lab</span>
+          <span class="age-gate-stat-label">Certified</span>
+        </div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat">
+          <span class="age-gate-stat-value">Research</span>
+          <span class="age-gate-stat-label">Use Only</span>
+        </div>
+      </div>
+      <div class="age-gate-divider"></div>
+      <p class="age-gate-disclaimer">All compounds are sold for research and laboratory use only. Products are not for human consumption or medical use.</p>
+      <label class="age-gate-remember">
+        <input type="checkbox" id="ageRemember">
+        Remember for 30 days
+      </label>
+      <div class="age-gate-buttons">
+        <button class="age-gate-btn-deny" id="ageDeny">I Am Under 21</button>
+        <button class="age-gate-btn-enter" id="ageEnter">Enter Site</button>
+      </div>
+    </div>
+    <div class="age-gate-footer">&copy; 2026 PepLab.us &bull; For Research Purposes Only</div>
+  </div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="container">
+      <span>Free shipping on orders $250+ &nbsp;&middot;&nbsp; For research use only</span>
+    </div>
+  </div>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">PepLab<span>.us</span></a>
+      <nav class="nav-links" id="nav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="faq.html" class="active">FAQ</a>
+        <a href="test-results.html">Test Results</a>
+        <a href="research-guide.html">Research Guide</a>
+      </nav>
+      <div class="header-actions">
+        <a href="shop.html" class="nav-cta">Shop Now</a>
+      </div>
+      <button class="mobile-toggle" id="menuBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about ordering, shipping, and product quality.</p>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What are your peptides used for?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">All PepLab.us products are sold exclusively for in-vitro laboratory research and scientific study. They are not approved for human or veterinary use and are not intended for use as drugs, food additives, or cosmetics.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How do you verify purity?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Every batch is tested by independent third-party laboratories using High-Performance Liquid Chromatography (HPLC) for purity analysis and Mass Spectrometry (MS) for identity confirmation. We maintain a minimum purity standard of 99% and publish all Certificates of Analysis on our Test Results page.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Where can I view your Certificates of Analysis?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">All COAs are available on our <a href="test-results.html" style="color: var(--accent);">Test Results</a> page. You can review them before placing an order. Each COA includes HPLC chromatograms, mass spec data, and batch-specific purity percentages.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How long does shipping take?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Orders placed before 2:00 PM EST Monday through Friday are processed the same business day. Standard domestic shipping takes 2-3 business days. Expedited shipping options are available at checkout. All orders include tracking information sent via email.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How are temperature-sensitive products shipped?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Temperature-sensitive compounds are packaged with gel ice packs and insulated liners to maintain cold chain integrity during transit. Products are shipped in sealed, light-protected vials to prevent degradation.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What payment methods do you accept?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">We accept all major credit and debit cards (Visa, Mastercard, American Express, Discover), as well as cryptocurrency payments including Bitcoin and Ethereum. All transactions are secured with 256-bit SSL encryption.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is your return and refund policy?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Due to the nature of our products, we cannot accept returns on opened items. However, if you receive a damaged or incorrect product, we will replace it at no cost or issue a full refund. Please see our <a href="refund.html" style="color: var(--accent);">Refund Policy</a> page for complete details.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do you ship internationally?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Currently, PepLab.us ships to addresses within the United States only. We are working on expanding our shipping capabilities to serve the international research community in the future.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How should I store my peptides?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Unreconstituted (lyophilized) peptides should be stored in a freezer at -20°C for long-term storage. Once reconstituted, peptides should be refrigerated at 2-8°C and typically used within 30 days. Avoid repeated freeze-thaw cycles, as this can degrade the compound.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do you offer bulk or wholesale pricing?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes, we offer volume discounts for qualified research institutions and laboratories. Please contact us at contact@peplabs.us with your requirements and institutional affiliation for a custom quote.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is bacteriostatic water and do I need it?</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Bacteriostatic water is sterile water containing 0.9% benzyl alcohol, which inhibits bacterial growth. It is used to reconstitute lyophilized (freeze-dried) peptides into a solution for research use. If you are reconstituting peptides, you will need bacteriostatic water, which is available in our shop.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Still Have Questions?</h2>
+      <p>Our support team is here to help with any questions about our products or your order.</p>
+      <a href="mailto:contact@peplabs.us" class="btn-primary">Contact Us &rarr;</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">PEPLAB<span>.US</span></div>
+          <p>PepLab.us is a US-based supplier of premium research peptides. All products are for laboratory and research use only. Not for human consumption.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="shop.html">All Products</a>
+          <a href="shop.html#recovery">Recovery Peptides</a>
+          <a href="shop.html#metabolic">Metabolic Peptides</a>
+          <a href="shop.html#growth">Growth Hormone Peptides</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="test-results.html">Test Results</a>
+          <a href="research-guide.html">Research Guide</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="shipping.html">Shipping Policy</a>
+          <a href="refund.html">Refund Policy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 PepLab.us. All rights reserved. For research use only.</p>
+        <p>contact@peplabs.us</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
