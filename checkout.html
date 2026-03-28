@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — PepLab.us</title>
+  <meta name="description" content="Complete your research compound order at PepLab.us. Secure checkout with encrypted payment processing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- AGE GATE -->
+  <div class="age-gate-overlay" id="ageGate">
+    <div class="age-gate-header">
+      <div class="age-gate-label">Welcome to</div>
+      <div class="age-gate-logo">PEPLAB<span>.US</span></div>
+      <div class="age-gate-subtitle">Research</div>
+    </div>
+    <div class="age-gate-card">
+      <div class="age-gate-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+        Age Verification Required
+      </div>
+      <h2>You Must Be 21+ to Enter</h2>
+      <p class="age-gate-desc">By entering, you accept our Terms and confirm you are of legal age to view research compounds in your jurisdiction.</p>
+      <div class="age-gate-divider"></div>
+      <div class="age-gate-stats">
+        <div class="age-gate-stat"><span class="age-gate-stat-value">99%+</span><span class="age-gate-stat-label">Purity</span></div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat"><span class="age-gate-stat-value">Lab</span><span class="age-gate-stat-label">Certified</span></div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat"><span class="age-gate-stat-value">Research</span><span class="age-gate-stat-label">Use Only</span></div>
+      </div>
+      <div class="age-gate-divider"></div>
+      <p class="age-gate-disclaimer">All compounds are sold for research and laboratory use only. Products are not for human consumption or medical use.</p>
+      <label class="age-gate-remember"><input type="checkbox" id="ageRemember"> Remember for 30 days</label>
+      <div class="age-gate-buttons">
+        <button class="age-gate-btn-deny" id="ageDeny">I Am Under 21</button>
+        <button class="age-gate-btn-enter" id="ageEnter">Enter Site</button>
+      </div>
+    </div>
+    <div class="age-gate-footer">&copy; 2026 PepLab.us &bull; For Research Purposes Only</div>
+  </div>
+
+  <div class="top-bar"><div class="container"><span>Free shipping on orders $250+ &nbsp;&middot;&nbsp; For research use only</span></div></div>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">PepLab<span>.us</span></a>
+      <nav class="nav-links" id="nav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="test-results.html">Test Results</a>
+        <a href="research-guide.html">Research Guide</a>
+      </nav>
+      <div class="header-actions"><a href="shop.html" class="nav-cta">Shop Now</a></div>
+      <button class="mobile-toggle" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="checkout-page">
+    <div class="container">
+      <a href="shop.html" class="pdp-back">&larr; Back to Shop</a>
+
+      <div class="checkout-layout">
+        <!-- LEFT: FORMS -->
+        <div class="checkout-forms">
+
+          <!-- CONTACT -->
+          <div class="checkout-section">
+            <div class="checkout-section-title">Contact Information</div>
+            <div class="checkout-form-row">
+              <div class="checkout-field">
+                <label for="checkoutEmail">Email Address</label>
+                <input type="email" id="checkoutEmail" placeholder="researcher@institution.edu" required>
+              </div>
+              <div class="checkout-field">
+                <label for="checkoutPhone">Phone Number</label>
+                <input type="tel" id="checkoutPhone" placeholder="(555) 000-0000">
+              </div>
+            </div>
+          </div>
+
+          <!-- SHIPPING -->
+          <div class="checkout-section">
+            <div class="checkout-section-title">Shipping Address</div>
+            <div class="checkout-form-row">
+              <div class="checkout-field">
+                <label for="shipFirst">First Name</label>
+                <input type="text" id="shipFirst" placeholder="First name" required>
+              </div>
+              <div class="checkout-field">
+                <label for="shipLast">Last Name</label>
+                <input type="text" id="shipLast" placeholder="Last name" required>
+              </div>
+            </div>
+            <div class="checkout-form-row full">
+              <div class="checkout-field">
+                <label for="shipCompany">Company / Institution (optional)</label>
+                <input type="text" id="shipCompany" placeholder="Research lab or institution">
+              </div>
+            </div>
+            <div class="checkout-form-row full">
+              <div class="checkout-field">
+                <label for="shipAddress">Address</label>
+                <input type="text" id="shipAddress" placeholder="Street address" required>
+              </div>
+            </div>
+            <div class="checkout-form-row full">
+              <div class="checkout-field">
+                <label for="shipAddress2">Apt, Suite, etc. (optional)</label>
+                <input type="text" id="shipAddress2" placeholder="Apartment, suite, unit, etc.">
+              </div>
+            </div>
+            <div class="checkout-form-row">
+              <div class="checkout-field">
+                <label for="shipCity">City</label>
+                <input type="text" id="shipCity" placeholder="City" required>
+              </div>
+              <div class="checkout-field">
+                <label for="shipState">State</label>
+                <select id="shipState" required>
+                  <option value="">Select state</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+                  <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+                  <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+                  <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                  <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+                  <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                  <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+                  <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+                  <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                </select>
+              </div>
+            </div>
+            <div class="checkout-form-row">
+              <div class="checkout-field">
+                <label for="shipZip">ZIP Code</label>
+                <input type="text" id="shipZip" placeholder="00000" required maxlength="10">
+              </div>
+              <div class="checkout-field">
+                <label for="shipCountry">Country</label>
+                <select id="shipCountry" required>
+                  <option value="US" selected>United States</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- PAYMENT -->
+          <div class="checkout-section">
+            <div class="checkout-section-title">Payment Information</div>
+            <div class="checkout-card-icons">
+              <div class="checkout-card-icon active">VISA</div>
+              <div class="checkout-card-icon">MC</div>
+              <div class="checkout-card-icon">AMEX</div>
+              <div class="checkout-card-icon">DISC</div>
+            </div>
+            <div class="checkout-form-row full">
+              <div class="checkout-field">
+                <label for="cardName">Name on Card</label>
+                <input type="text" id="cardName" placeholder="Full name as displayed on card" required>
+              </div>
+            </div>
+            <div class="checkout-form-row full">
+              <div class="checkout-field">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" required maxlength="19" inputmode="numeric">
+              </div>
+            </div>
+            <div class="checkout-card-row">
+              <div class="checkout-field">
+                <label for="cardExpiry">Expiration</label>
+                <input type="text" id="cardExpiry" placeholder="MM / YY" required maxlength="7" inputmode="numeric">
+              </div>
+              <div class="checkout-field">
+                <label for="cardCVC">CVC</label>
+                <input type="text" id="cardCVC" placeholder="000" required maxlength="4" inputmode="numeric">
+              </div>
+              <div class="checkout-field">
+                <label for="cardZip">Billing ZIP</label>
+                <input type="text" id="cardZip" placeholder="00000" required maxlength="10" inputmode="numeric">
+              </div>
+            </div>
+            <div class="checkout-secure-notice">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+              Your payment information is encrypted and secure. This checkout will be powered by Stripe.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <div class="checkout-summary" id="checkoutSummary">
+          <div class="checkout-summary-title">Order Summary</div>
+          <div id="checkoutItems">
+            <!-- Populated by JS -->
+          </div>
+          <div class="checkout-summary-totals" id="checkoutTotals">
+            <!-- Populated by JS -->
+          </div>
+          <button class="checkout-place-order" id="placeOrderBtn" disabled>Place Order</button>
+          <div class="checkout-research-notice">
+            All products are for research and laboratory use only.<br>
+            By placing this order, you confirm these products will not be used for human consumption.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">PEPLAB<span>.US</span></div>
+          <p>PepLab.us is a US-based supplier of premium research peptides. All products are for laboratory and research use only. Not for human consumption.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="shop.html">All Products</a>
+          <a href="shop.html#recovery">Recovery Peptides</a>
+          <a href="shop.html#metabolic">Metabolic Peptides</a>
+          <a href="shop.html#growth">Growth Hormone Peptides</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="test-results.html">Test Results</a>
+          <a href="research-guide.html">Research Guide</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="shipping.html">Shipping Policy</a>
+          <a href="refund.html">Refund Policy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 PepLab.us. All rights reserved. For research use only.</p>
+        <p>contact@peplabs.us</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="cart.js"></script>
+  <script>
+  (function() {
+    const cart = window.PepLabCart;
+    if (!cart) return;
+
+    const items = cart.getCart();
+    const itemsEl = document.getElementById('checkoutItems');
+    const totalsEl = document.getElementById('checkoutTotals');
+    const orderBtn = document.getElementById('placeOrderBtn');
+
+    // Redirect if cart empty
+    if (items.length === 0) {
+      itemsEl.innerHTML = '<p style="font-size:0.9rem;color:var(--text-muted);padding:20px 0;">Your cart is empty. <a href="shop.html" style="color:var(--accent);font-weight:600;">Browse products</a></p>';
+      totalsEl.innerHTML = '';
+      return;
+    }
+
+    // Placeholder SVG
+    const phSVG = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.75" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714a2.25 2.25 0 0 0 .659 1.591L19 14.5M14.25 3.104c.251.023.501.05.75.082M19 14.5l-1.46 1.46a2.25 2.25 0 0 1-1.591.659H8.051a2.25 2.25 0 0 1-1.591-.659L5 14.5m14 0V5.846a2.25 2.25 0 0 0-1.172-1.976l-.348-.192M5 14.5V5.846a2.25 2.25 0 0 1 1.172-1.976l.348-.192"/></svg>';
+
+    // Render items
+    itemsEl.innerHTML = items.map(item => {
+      const imgHtml = item.image
+        ? '<img src="' + item.image + '" alt="' + item.name + '">'
+        : '<div class="checkout-summary-img-placeholder">' + phSVG + '</div>';
+      return '<div class="checkout-summary-item">' +
+        '<div class="checkout-summary-img">' + imgHtml + '</div>' +
+        '<div class="checkout-summary-item-details">' +
+          '<div class="checkout-summary-item-name">' + item.name + '</div>' +
+          '<div class="checkout-summary-item-meta">Qty: ' + item.quantity + '</div>' +
+        '</div>' +
+        '<div class="checkout-summary-item-price">$' + (item.price * item.quantity).toFixed(2) + '</div>' +
+      '</div>';
+    }).join('');
+
+    // Render totals
+    const subtotal = cart.getCartTotal();
+    const freeShipping = subtotal >= 250;
+    const shipping = freeShipping ? 0 : 12.99;
+    const total = subtotal + shipping;
+
+    totalsEl.innerHTML =
+      '<div class="checkout-summary-row"><span>Subtotal</span><span>$' + subtotal.toFixed(2) + '</span></div>' +
+      '<div class="checkout-summary-row"><span>Shipping</span><span' + (freeShipping ? ' class="free"' : '') + '>' + (freeShipping ? 'FREE' : '$' + shipping.toFixed(2)) + '</span></div>' +
+      '<div class="checkout-summary-row total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
+
+    // Enable place order button
+    orderBtn.disabled = false;
+
+    // Card number formatting
+    const cardNum = document.getElementById('cardNumber');
+    if (cardNum) {
+      cardNum.addEventListener('input', function() {
+        let v = this.value.replace(/\D/g, '').substring(0, 16);
+        this.value = v.replace(/(.{4})/g, '$1 ').trim();
+      });
+    }
+
+    // Expiry formatting
+    const expiry = document.getElementById('cardExpiry');
+    if (expiry) {
+      expiry.addEventListener('input', function() {
+        let v = this.value.replace(/\D/g, '').substring(0, 4);
+        if (v.length >= 2) v = v.substring(0, 2) + ' / ' + v.substring(2);
+        this.value = v;
+      });
+    }
+
+    // CVC limit
+    const cvc = document.getElementById('cardCVC');
+    if (cvc) {
+      cvc.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').substring(0, 4);
+      });
+    }
+
+    // Place order
+    orderBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // Simple validation
+      const required = ['checkoutEmail', 'shipFirst', 'shipLast', 'shipAddress', 'shipCity', 'shipState', 'shipZip', 'cardName', 'cardNumber', 'cardExpiry', 'cardCVC', 'cardZip'];
+      let valid = true;
+
+      // Clear previous errors
+      document.querySelectorAll('.checkout-field input.error').forEach(el => el.classList.remove('error'));
+      document.querySelectorAll('.field-error').forEach(el => el.remove());
+
+      required.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el || !el.value.trim()) {
+          valid = false;
+          if (el) {
+            el.classList.add('error');
+            const errMsg = document.createElement('span');
+            errMsg.className = 'field-error';
+            errMsg.textContent = 'This field is required';
+            el.parentElement.appendChild(errMsg);
+          }
+        }
+      });
+
+      if (!valid) {
+        const firstErr = document.querySelector('.checkout-field input.error');
+        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // Show order confirmation
+      orderBtn.disabled = true;
+      orderBtn.textContent = 'Processing...';
+
+      setTimeout(function() {
+        const orderNum = 'PL-' + Date.now().toString(36).toUpperCase();
+        cart.clearCart();
+
+        const overlay = document.createElement('div');
+        overlay.className = 'order-confirmation-overlay';
+        overlay.innerHTML =
+          '<div class="order-confirmation">' +
+            '<div class="order-confirmation-icon">' +
+              '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="32" height="32"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>' +
+            '</div>' +
+            '<h2>Order Confirmed!</h2>' +
+            '<div class="order-number">Order #' + orderNum + '</div>' +
+            '<p>Thank you for your order. A confirmation email will be sent to your inbox shortly. Your research compounds will be shipped within 1 business day.</p>' +
+            '<a href="shop.html" class="order-confirmation-btn">Continue Shopping</a>' +
+          '</div>';
+        document.body.appendChild(overlay);
+      }, 1500);
+    });
+  })();
+  </script>
+</body>
+</html>
