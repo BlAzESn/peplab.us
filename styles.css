@@ -356,7 +356,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== SHOP PAGE ===== */
 .shop-hero {
-  padding: 140px 0 60px; text-align: center;
+  padding: 160px 24px 80px; text-align: center;
   background: linear-gradient(170deg, #0a1420 0%, #111f35 60%, #1a56db 100%);
   color: #fff;
 }
