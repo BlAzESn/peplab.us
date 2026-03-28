@@ -818,6 +818,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     border-bottom: 1px solid var(--border); gap: 16px;
   }
   .mobile-toggle { display: flex; }
+  .nav-cta { display: none; }
+  .header-actions { gap: 8px; }
   .product-grid-4 { grid-template-columns: repeat(2, 1fr); }
   .features-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
