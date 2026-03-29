@@ -34,15 +34,10 @@
   }
 })();
 
-// Hero video — skip on mobile to save bandwidth
+// Hero video fade-in & autoplay fallback
 (function() {
   const vid = document.querySelector('.hero-video');
   if (!vid) return;
-  if (window.innerWidth < 768) {
-    vid.removeAttribute('autoplay');
-    vid.pause && vid.pause();
-    return;
-  }
   function showVid() { vid.classList.add('loaded'); }
   function tryPlay() {
     var p = vid.play();
@@ -50,6 +45,7 @@
   }
   if (vid.readyState >= 3) { showVid(); tryPlay(); }
   else { vid.addEventListener('canplay', function() { showVid(); tryPlay(); }, { once: true }); }
+  // Fallback: retry on first user interaction if autoplay was blocked
   document.addEventListener('click', function() { if (vid.paused) tryPlay(); }, { once: true });
   document.addEventListener('scroll', function() { if (vid.paused) tryPlay(); }, { once: true });
 })();
