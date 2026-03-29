@@ -362,7 +362,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== SHOP PAGE ===== */
 .shop-hero {
-  padding: 160px 24px 80px; text-align: center;
+  padding: 100px 24px 56px; text-align: center;
   background: linear-gradient(170deg, #0a1420 0%, #111f35 60%, #1a56db 100%);
   color: #fff;
 }
@@ -416,7 +416,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .shop-catalog {
-  padding: 32px 0 80px; background: var(--primary);
+  padding: 32px 0 56px; background: var(--primary);
 }
 
 .product-info-tags {
@@ -655,7 +655,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .pdp-important-notice {
   display: flex; align-items: flex-start; gap: 16px;
   background: var(--primary-dark); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px; margin-top: 48px;
+  border-radius: var(--radius); padding: 24px; margin-top: 32px;
 }
 .pdp-important-notice svg { flex-shrink: 0; color: var(--accent); }
 .pdp-important-notice-title {
@@ -678,7 +678,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== SPLIT LAYOUT ===== */
 .split-layout {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
 }
 .split-layout-reverse { direction: rtl; }
 .split-layout-reverse > * { direction: ltr; }
@@ -838,10 +838,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .about-content p { color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 20px; }
 
 .stats-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 60px 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 40px 0;
 }
 .stat-card {
-  text-align: center; padding: 32px; background: #fff;
+  text-align: center; padding: 24px; background: #fff;
   border: 1px solid var(--border); border-radius: var(--radius);
 }
 .stat-card .number { font-size: 2.2rem; font-weight: 800; color: var(--accent); }
@@ -869,7 +869,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== CTA SECTION ===== */
 .cta-section {
-  padding: 100px 0; text-align: center;
+  padding: 64px 0; text-align: center;
   background: var(--primary-dark);
 }
 .cta-section h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; margin-bottom: 16px; color: var(--text); }
@@ -898,7 +898,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 .feature-card {
   background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 36px; transition: all 0.3s;
+  padding: 28px; transition: all 0.3s;
 }
 .feature-card:hover { border-color: #c5d1e0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
 .feature-icon {
@@ -912,8 +912,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== RESEARCH GUIDE ===== */
 .guide-content { max-width: 800px; margin: 0 auto; }
-.guide-content h2 { font-size: 1.5rem; font-weight: 700; margin: 48px 0 16px; color: var(--text); }
-.guide-content h3 { font-size: 1.2rem; font-weight: 600; margin: 32px 0 12px; color: var(--text); }
+.guide-content h2 { font-size: 1.5rem; font-weight: 700; margin: 32px 0 12px; color: var(--text); }
+.guide-content h3 { font-size: 1.2rem; font-weight: 600; margin: 24px 0 10px; color: var(--text); }
 .guide-content p { color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
 .guide-content ul { padding-left: 20px; margin-bottom: 16px; }
 .guide-content ul li { color: var(--text-muted); line-height: 1.8; padding: 4px 0; list-style: disc; }
@@ -1253,7 +1253,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .pdp-important-notice {
   display: flex; align-items: flex-start; gap: 16px;
   background: var(--primary-dark); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px; margin-top: 48px;
+  border-radius: var(--radius); padding: 24px; margin-top: 32px;
 }
 .pdp-important-notice svg { flex-shrink: 0; color: var(--accent); }
 .pdp-important-notice-title {
