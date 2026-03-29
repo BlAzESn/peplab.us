@@ -236,6 +236,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .view-all-link:hover { color: var(--accent); }
 
+.view-all-wrap { text-align: center; margin-top: 36px; }
+
 .text-accent { color: var(--accent); }
 .text-accent-light { color: #93c5fd; }
 
@@ -1714,4 +1716,58 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (max-width: 480px) {
   .checkout-form-row { grid-template-columns: 1fr; }
   .checkout-card-row { grid-template-columns: 1fr; }
+}
+
+/* ===== PROMO CODE ===== */
+.checkout-promo {
+  margin: 16px 0 0; padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.checkout-promo-toggle {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font); font-size: 0.8rem; font-weight: 600;
+  color: var(--accent); padding: 0; display: flex; align-items: center; gap: 6px;
+}
+.checkout-promo-row {
+  display: flex; gap: 8px; margin-top: 10px;
+}
+.checkout-promo-row input {
+  flex: 1; padding: 9px 12px; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); font-family: var(--font); font-size: 0.85rem;
+  color: var(--text); background: var(--primary-dark); outline: none;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.checkout-promo-row input:focus { border-color: var(--accent); }
+.checkout-promo-apply {
+  padding: 9px 16px; background: var(--navy); color: #fff;
+  border: none; border-radius: var(--radius-sm); font-family: var(--font);
+  font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+  text-transform: uppercase; letter-spacing: 0.5px; transition: background 0.2s;
+}
+.checkout-promo-apply:hover { background: var(--accent); }
+.checkout-promo-msg {
+  font-size: 0.78rem; margin-top: 6px;
+  display: none;
+}
+.checkout-promo-msg.success { color: #16a34a; display: block; }
+.checkout-promo-msg.error { color: #dc2626; display: block; }
+
+/* ===== STICKY MOBILE SHOP BAR ===== */
+.sticky-shop-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
+  background: var(--navy); border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 12px 20px;
+}
+.sticky-shop-bar a {
+  display: block; text-align: center;
+  background: #fff; color: var(--navy); font-weight: 700;
+  font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+  padding: 14px; border-radius: var(--radius-sm);
+}
+@media (max-width: 768px) {
+  .sticky-shop-bar { display: block; transform: translateY(100%); transition: transform 0.3s ease; }
+  .sticky-shop-bar.visible { transform: translateY(0); }
+  /* Give page bottom padding so content isn't hidden behind bar */
+  body.has-sticky-bar { padding-bottom: 72px; }
 }
