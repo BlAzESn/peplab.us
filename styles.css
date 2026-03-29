@@ -131,6 +131,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   line-height: 1.05; margin-bottom: 24px; color: #fff;
   white-space: nowrap;
 }
+.hero-logo {
+  max-width: clamp(220px, 40vw, 400px); height: auto; display: block;
+  margin: 0 auto; filter: brightness(0) invert(1);
+}
 .hero h1 .gradient {
   display: inline;
   font-size: 0.65em; font-weight: 700; letter-spacing: 3px;
@@ -1295,7 +1299,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   }
   .mobile-toggle { display: flex; order: 4; }
   .nav-cta { display: none; }
-  .header-actions { gap: 8px; order: 3; margin-left: auto; }
+  .header-actions { gap: 8px; order: 3; margin-left: auto; margin-right: 12px; }
   .header-inner { flex-wrap: nowrap; }
   .logo { margin-right: auto; }
   .product-grid-4 { grid-template-columns: repeat(2, 1fr); }
