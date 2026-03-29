@@ -93,6 +93,8 @@
     'MT-2 10mg':                      { image: 'assets/products/mt2-10mg.webp',               link: 'product-mt2.html' },
     'NAD+ 500mg':                     { image: 'assets/products/nad-500mg.webp',              link: 'product-nad.html' },
     'Retatrutide (GLP-3 RT) 10mg':    { image: 'assets/products/glp3rt.webp',                 link: 'product-glp3rt.html' },
+    'Retatrutide (GLP-3 RT) 10mg — 3 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
+    'Retatrutide (GLP-3 RT) 10mg — 7 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
     'Selank 5mg':                     { image: 'assets/products/selank-5mg.webp',             link: 'product-selank.html' },
     'Semax 5mg':                      { image: 'assets/products/semax-5mg.webp',              link: 'product-semax.html' },
     'Sermorelin 5mg':                 { image: 'assets/products/sermorelin-5mg.webp',         link: 'product-sermorelin.html' },
@@ -221,7 +223,22 @@
     const subtotal = getCartTotal();
     const freeShipping = subtotal >= 250;
 
-    footer.innerHTML = `
+    // Check for upsell opportunity: 3-pack in cart but no 7-pack
+    var has3Pack = cart.some(function(i) { return i.id === 'glp3rt-3pack'; });
+    var has7Pack = cart.some(function(i) { return i.id === 'glp3rt-7pack'; });
+    var upsellHtml = '';
+    if (has3Pack && !has7Pack) {
+      upsellHtml = `
+        <div class="upsell-banner">
+          <div class="upsell-banner-label">Limited Time Upgrade</div>
+          <div class="upsell-banner-title">Get 7 More For The Price Of 2!</div>
+          <div class="upsell-banner-price">7 Vials — <strong>$399.99</strong> ($57/vial)</div>
+          <button class="upsell-banner-btn" id="cartUpsellBtn">Upgrade &amp; Save More</button>
+        </div>
+      `;
+    }
+
+    footer.innerHTML = upsellHtml + `
       <div class="cart-shipping-notice ${freeShipping ? 'cart-shipping-free' : ''}">
         ${freeShipping
           ? '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg> Free shipping unlocked!'
@@ -235,6 +252,24 @@
       <a href="checkout.html" class="cart-checkout-btn">Proceed to Checkout</a>
       <button class="cart-continue-btn" id="cartContinue">Continue Shopping</button>
     `;
+
+    // Wire upsell button
+    var upsellBtn = document.getElementById('cartUpsellBtn');
+    if (upsellBtn) {
+      upsellBtn.addEventListener('click', function() {
+        removeFromCart('glp3rt-3pack');
+        addToCart({
+          id: 'glp3rt-7pack',
+          name: 'Retatrutide (GLP-3 RT) 10mg — 7 Vials',
+          price: 399.99,
+          image: 'assets/products/glp3rt.webp',
+          link: 'product-glp3rt.html',
+          quantity: 1,
+          isOffer: true,
+          offerType: 'upgrade'
+        });
+      });
+    }
 
     // Wire up drawer event listeners
     body.querySelectorAll('.cart-item-qty-btn').forEach(btn => {

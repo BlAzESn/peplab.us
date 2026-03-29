@@ -678,6 +678,73 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-radius: 2px; margin-bottom: 28px;
 }
 
+/* ===== OFFER CARDS ===== */
+.pdp-offer-card {
+  border: 2px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin-bottom: 16px; position: relative; overflow: hidden;
+}
+.pdp-offer-main {
+  border-color: var(--accent); background: linear-gradient(135deg, #f0f4ff 0%, #fff 100%);
+}
+.pdp-offer-upgrade {
+  border-color: #f59e0b; background: linear-gradient(135deg, #fffbeb 0%, #fff 100%);
+}
+.pdp-offer-badge {
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  background: var(--accent); color: #fff; padding: 4px 12px;
+  border-radius: 4px; margin-bottom: 12px;
+}
+.pdp-offer-badge-urgent { background: #f59e0b; color: #000; }
+.pdp-offer-title {
+  font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 4px;
+}
+.pdp-offer-subtitle {
+  font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;
+}
+.pdp-offer-pricing {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;
+}
+.pdp-offer-price { font-size: 2rem; font-weight: 800; color: var(--text); }
+.pdp-offer-per {
+  font-size: 0.9rem; font-weight: 700; color: var(--accent);
+  background: var(--accent-light); padding: 3px 10px; border-radius: 4px;
+}
+.pdp-offer-upgrade .pdp-offer-per { color: #92400e; background: #fef3c7; }
+.pdp-offer-savings { font-size: 0.8rem; color: #16a34a; font-weight: 600; }
+.pdp-upgrade-btn {
+  width: 100%; padding: 14px; border: 2px solid #f59e0b;
+  background: #fff; color: #92400e; font-size: 0.9rem; margin-top: 12px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  border-radius: var(--radius-sm); cursor: pointer; font-family: var(--font);
+  transition: all 0.2s;
+}
+.pdp-upgrade-btn:hover { background: #fffbeb; border-color: #d97706; }
+
+/* Upsell banner (cart drawer + checkout) */
+.upsell-banner {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #f59e0b;
+  border-radius: 8px; padding: 16px; margin: 12px 0;
+}
+.upsell-banner-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: #92400e; margin-bottom: 6px;
+}
+.upsell-banner-title {
+  font-size: 0.95rem; font-weight: 800; color: #1a1a1a; margin-bottom: 4px;
+}
+.upsell-banner-price {
+  font-size: 0.8rem; color: #666; margin-bottom: 10px;
+}
+.upsell-banner-price strong { color: #92400e; }
+.upsell-banner-btn {
+  width: 100%; padding: 10px; background: #f59e0b; color: #000;
+  border: none; border-radius: 6px; font-family: var(--font);
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; cursor: pointer; transition: background 0.2s;
+}
+.upsell-banner-btn:hover { background: #d97706; }
+
 /* ===== SPLIT LAYOUT ===== */
 .split-layout {
   display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
