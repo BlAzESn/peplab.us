@@ -62,10 +62,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .logo {
-  font-size: 1.5rem; font-weight: 800; letter-spacing: 2px;
-  display: flex; align-items: center; gap: 0; color: var(--navy);
+  display: flex; align-items: center; gap: 0;
 }
-.logo span { color: var(--accent); }
+.logo img {
+  height: 36px; width: auto; display: block;
+}
+.logo span { display: none; }
 
 .nav-links { display: flex; gap: 32px; align-items: center; }
 .nav-links a {
@@ -774,8 +776,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
   margin-bottom: 48px;
 }
-.footer-brand .logo { color: #fff; }
-.footer-brand .logo span { color: #93c5fd; }
+.footer-brand .logo img { height: 40px; width: auto; }
 .footer-brand p { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 16px; line-height: 1.6; }
 .footer-col h4 {
   font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
