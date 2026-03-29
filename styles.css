@@ -96,9 +96,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== HERO ===== */
 .hero {
-  min-height: 90vh; display: flex; flex-direction: column;
+  min-height: auto; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; padding: 80px 24px 0;
+  text-align: center; padding: 100px 24px 0;
   background: #0a1420;
   position: relative; overflow: hidden; color: #fff;
 }
@@ -143,7 +143,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background-clip: text;
 }
 
-.hero p { font-size: 1.05rem; color: rgba(255,255,255,0.6); max-width: 550px; margin: 0 auto 20px; line-height: 1.7; }
+.hero p { font-size: 1.15rem; color: rgba(255,255,255,0.5); max-width: 550px; margin: 0 auto 16px; line-height: 1.7; letter-spacing: 1px; }
 
 .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
