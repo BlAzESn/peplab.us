@@ -157,6 +157,18 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
+// Make entire product card clickable (except Add to Cart button)
+document.querySelectorAll('.product-card').forEach(card => {
+  const link = card.querySelector('.product-image-link');
+  if (link) {
+    card.addEventListener('click', (e) => {
+      if (!e.target.closest('.add-to-cart-btn')) {
+        window.location.href = link.href;
+      }
+    });
+  }
+});
+
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {

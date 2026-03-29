@@ -66,6 +66,47 @@
       .replace(/(^-|-$)/g, '');
   }
 
+  // ─── Product Name → Image & Link Map ─────────────────────
+  const PRODUCT_IMAGE_MAP = {
+    '5-Amino-1MQ 50mg':              { image: 'assets/products/5amino1mq-50mg.webp',         link: 'product-5amino.html' },
+    'AOD-9604 5mg':                   { image: 'assets/products/aod9604-5mg.webp',            link: 'product-aod9604.html' },
+    'Bacteriostatic Water':           { image: 'assets/products/bacteriostatic-water.webp',   link: 'product-bacwater.html' },
+    'Bacteriostatic Water 30mL':      { image: 'assets/products/bacteriostatic-water.webp',   link: 'product-bacwater.html' },
+    'BPC-157 5mg':                    { image: 'assets/products/bpc157-5mg.webp',             link: 'product-bpc157.html' },
+    'BPC-157 10mg':                   { image: 'assets/products/bpc157-10mg.webp',            link: 'product-bpc157-10mg.html' },
+    'CJC-1295 + Ipamorelin 5mg/5mg': { image: 'assets/products/cjc1295-ipamorelin-blend.webp', link: 'product-cjc-ipa-blend.html' },
+    'CJC-1295 DAC 5mg':              { image: 'assets/products/cjc1295-dac-5mg.webp',        link: 'product-cjc1295dac.html' },
+    'CJC-1295 No DAC 5mg':           { image: 'assets/products/cjc1295-nodac-5mg.webp',      link: 'product-cjc1295nodac.html' },
+    'DSIP 5mg':                       { image: '',                                             link: 'product-dsip.html' },
+    'Epithalon 10mg':                 { image: 'assets/products/epithalon-10mg.webp',         link: 'product-epithalon.html' },
+    'GHK-Cu':                         { image: 'assets/products/ghk-cu.webp',                 link: 'product-ghkcu.html' },
+    'GLP-3 RT':                       { image: 'assets/products/glp3rt.webp',                 link: 'product-glp3rt.html' },
+    'Glow Blend 70mg':                { image: 'assets/products/glow-blend-70mg.webp',        link: 'product-glow.html' },
+    'HCG 5000 IU':                    { image: 'assets/products/hcg-5000iu.webp',             link: 'product-hcg.html' },
+    'IGF-1 LR3 1mg':                  { image: 'assets/products/igf1-lr3-1mg.webp',           link: 'product-igf1lr3.html' },
+    'Ipamorelin 10mg':                { image: 'assets/products/ipamorelin-10mg.webp',        link: 'product-ipamorelin.html' },
+    'Kisspeptin 10mg':                { image: 'assets/products/kisspeptin-10mg.webp',        link: 'product-kisspeptin.html' },
+    'KLOW Blend 80mg':                { image: 'assets/products/klow-blend-80mg.webp',        link: 'product-klow.html' },
+    'L-Carnitine 500mg':              { image: 'assets/products/l-carnitine-500mg.webp',      link: 'product-lcarnitine.html' },
+    'MOTS-c 10mg':                    { image: 'assets/products/motsc-10mg.webp',             link: 'product-motsc.html' },
+    'MT-1 10mg':                      { image: 'assets/products/mt1-10mg.webp',               link: 'product-mt1.html' },
+    'MT-2 10mg':                      { image: 'assets/products/mt2-10mg.webp',               link: 'product-mt2.html' },
+    'NAD+ 500mg':                     { image: 'assets/products/nad-500mg.webp',              link: 'product-nad.html' },
+    'Retatrutide (GLP-3 RT) 10mg':    { image: 'assets/products/glp3rt.webp',                 link: 'product-glp3rt.html' },
+    'Selank 5mg':                     { image: 'assets/products/selank-5mg.webp',             link: 'product-selank.html' },
+    'Semax 5mg':                      { image: 'assets/products/semax-5mg.webp',              link: 'product-semax.html' },
+    'Sermorelin 5mg':                 { image: 'assets/products/sermorelin-5mg.webp',         link: 'product-sermorelin.html' },
+    'SS-31 5mg':                      { image: 'assets/products/ss31-5mg.webp',               link: 'product-ss31.html' },
+    'TB-500 5mg':                     { image: 'assets/products/tb500-5mg.webp',              link: 'product-tb500.html' },
+    'Tesamorelin 10mg':               { image: 'assets/products/tesamorelin-10mg.webp',       link: 'product-tesamorelin.html' },
+    'Tirzepatide 10mg':               { image: 'assets/products/tirzepatide-10mg.webp',       link: 'product-tirzepatide.html' },
+    'Wolverine Blend':                { image: 'assets/products/wolverine-blend.webp',        link: 'product-wolverine.html' },
+  };
+
+  function lookupProduct(name) {
+    return PRODUCT_IMAGE_MAP[name] || { image: '', link: '' };
+  }
+
   // ─── Inject Cart Badge into Header ────────────────────────
   function injectCartBadge() {
     const headerActions = document.querySelector('.header-actions');
@@ -163,7 +204,7 @@
           }
         </div>
         <div class="cart-item-details">
-          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-name">${item.link ? '<a href="' + item.link + '" style="color:inherit;text-decoration:none">' + item.name + '</a>' : item.name}</div>
           <div class="cart-item-price">$${item.price.toFixed(2)}</div>
           <div class="cart-item-qty-row">
             <div class="cart-item-qty-controls">
@@ -329,7 +370,8 @@
           const priceText = item.querySelector('.pdp-bundle-item-price')?.textContent?.trim() || '0';
           const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
           if (name && price > 0) {
-            addToCart({ id: slugify(name), name, price, image: '', link: '', quantity: 1 });
+            const mapped = lookupProduct(name);
+            addToCart({ id: slugify(name), name, price, image: mapped.image, link: mapped.link, quantity: 1 });
           }
         });
       });
