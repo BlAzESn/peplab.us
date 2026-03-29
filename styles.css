@@ -143,7 +143,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background-clip: text;
 }
 
-.hero p { font-size: 1.05rem; color: rgba(255,255,255,0.6); max-width: 550px; margin: 0 auto 40px; line-height: 1.7; }
+.hero p { font-size: 1.05rem; color: rgba(255,255,255,0.6); max-width: 550px; margin: 0 auto 20px; line-height: 1.7; }
 
 .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
@@ -193,7 +193,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-stats {
   position: relative; z-index: 3;
   display: flex; align-items: center; justify-content: center; gap: 48px;
-  margin-top: 60px; padding: 40px 0;
+  margin-top: 32px; padding: 28px 0;
   border-top: 1px solid rgba(255,255,255,0.1);
   width: 100%; max-width: 700px;
 }
@@ -206,10 +206,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.12); }
 
 /* ===== SECTION COMMONS ===== */
-.section { padding: 100px 0; }
+.section { padding: 64px 0; }
 .section-alt { background: var(--primary-dark); }
 
-.section-header { text-align: center; margin-bottom: 60px; }
+.section-header { text-align: center; margin-bottom: 40px; }
 .section-header .label,
 .label {
   color: var(--accent); font-size: 0.75rem; font-weight: 600;
@@ -223,7 +223,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Section Header Row (title + view all link) */
 .section-header-row {
   display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 .section-header-row h2 {
   font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.5px;
@@ -758,7 +758,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== VERIFIED BANNER ===== */
 .verified-banner {
-  padding: 120px 0; text-align: center;
+  padding: 80px 0; text-align: center;
   background: linear-gradient(170deg, #0a1420 0%, #111f35 50%, #1a3a5c 100%);
   color: #fff;
 }
@@ -825,7 +825,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ===== PAGE HERO (inner pages) ===== */
 .page-hero {
-  padding: 140px 0 80px; text-align: center;
+  padding: 100px 0 60px; text-align: center;
   background: linear-gradient(170deg, #0a1420 0%, #111f35 60%, #1a56db 100%);
   color: #fff;
 }
@@ -1306,9 +1306,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .features-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-  .hero-buttons { flex-direction: column; align-items: center; }
-  .hero-stats { flex-direction: column; gap: 24px; }
-  .hero-stat-divider { width: 60px; height: 1px; }
+  .hero-stats { gap: 24px; }
+  .hero-stat-value { font-size: 1.2rem; }
+  .hero-stat-label { font-size: 0.65rem; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .split-stats { flex-wrap: wrap; gap: 24px; }
   .section-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
