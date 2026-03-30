@@ -65,7 +65,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: flex; align-items: center; gap: 0;
 }
 .logo img {
-  height: 36px; width: auto; display: block;
+  height: 28px; width: auto; display: block;
 }
 .logo span { display: none; }
 
@@ -123,16 +123,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .hero-label {
   font-size: 0.8rem; font-weight: 500; text-transform: uppercase;
-  letter-spacing: 3px; color: rgba(255,255,255,0.5); margin-bottom: 14px;
+  letter-spacing: 3px; color: rgba(255,255,255,0.5); margin-bottom: 24px;
 }
 
 .hero h1 {
   font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 800; letter-spacing: 6px;
-  line-height: 1.05; margin-bottom: 14px; color: #fff;
+  line-height: 1.05; margin: 0 0 20px; color: #fff;
   white-space: nowrap;
 }
 .hero-logo {
-  max-width: clamp(220px, 40vw, 400px); height: auto; display: block;
+  max-width: clamp(286px, 52vw, 520px); height: auto; display: block;
   margin: 0 auto;
 }
 .hero h1 .gradient {
