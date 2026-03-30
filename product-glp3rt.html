@@ -292,6 +292,7 @@
   // Image gallery switcher
   (function() {
     var mainImg = document.getElementById('pdpMainImg');
+    var pdpImageBox = mainImg ? mainImg.closest('.pdp-image') : null;
     var thumbs = document.querySelectorAll('.pdp-thumb');
     if (!mainImg || !thumbs.length) return;
     thumbs.forEach(function(thumb) {
@@ -300,6 +301,11 @@
         thumb.classList.add('active');
         mainImg.src = thumb.dataset.img;
         mainImg.alt = thumb.dataset.alt;
+        // COA is a tall document — switch to contain so nothing is cropped
+        var isCoa = thumb.dataset.img.indexOf('coa') !== -1;
+        if (pdpImageBox) {
+          pdpImageBox.classList.toggle('pdp-image-contain', isCoa);
+        }
       });
     });
   })();
