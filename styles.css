@@ -1004,6 +1004,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: border-color 0.2s;
 }
 .result-card .view-coa:hover { border-color: var(--accent); }
+.result-card .view-coa-pending {
+  color: var(--text-muted);
+}
+.result-card .view-coa-pending:hover { border-color: var(--text-muted); }
 
 /* ===== FEATURES / WHY US ===== */
 .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
