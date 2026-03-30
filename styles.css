@@ -815,26 +815,33 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: flex; align-items: center; justify-content: center;
 }
 .purity-badge-card {
-  width: 320px; height: 320px; border-radius: var(--radius);
-  background: linear-gradient(135deg, #0f1b2d, #1a3a5c);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: #fff; position: relative; overflow: hidden;
+  width: 320px; height: 400px; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
-.purity-badge-card::before {
-  content: ''; position: absolute; inset: 0;
+.purity-badge-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; border-radius: var(--radius);
+}
+.purity-badge-overlay {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+  background: rgba(15, 27, 45, 0.45);
   border-radius: var(--radius);
-  background: radial-gradient(circle at 50% 50%, rgba(26,86,219,0.3) 0%, transparent 70%);
 }
 .purity-badge-value {
   font-size: 5rem; font-weight: 900; position: relative; z-index: 1;
-  background: linear-gradient(135deg, #fff, #93c5fd);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.5), 0 0 40px rgba(26,86,219,0.3);
 }
 .purity-badge-text {
   position: relative; z-index: 1;
   font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 2px; color: rgba(255,255,255,0.6); margin-top: 8px;
+  letter-spacing: 2px; color: #fff; margin-top: 8px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
 }
 
 .split-image-placeholder {
@@ -1463,7 +1470,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .split-stats { flex-wrap: wrap; gap: 24px; }
   .section-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .purity-badge-card { width: 260px; height: 260px; }
+  .purity-badge-card { width: 260px; height: 340px; }
   .purity-badge-value { font-size: 3.5rem; }
   .shop-controls-inner { flex-direction: column; gap: 8px; }
   .shop-search { max-width: 100%; }
