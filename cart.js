@@ -32,7 +32,11 @@
   }
 
   function removeFromCart(id) {
-    const cart = getCart().filter(item => item.id !== id);
+    let cart = getCart().filter(item => item.id !== id);
+    // If 3-pack is removed, also remove the 7-pack upgrade (upgrade requires the 3-pack)
+    if (id === 'glp3rt-3pack') {
+      cart = cart.filter(item => item.id !== 'glp3rt-7pack');
+    }
     saveCart(cart);
   }
 
@@ -95,6 +99,7 @@
     'Retatrutide (GLP-3 RT) 10mg':    { image: 'assets/products/glp3rt.webp',                 link: 'product-glp3rt.html' },
     'Retatrutide (GLP-3 RT) 10mg — 3 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
     'Retatrutide (GLP-3 RT) 10mg — 7 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
+    'Retatrutide (GLP-3 RT) 10mg — 7 Vials (Upgrade)': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
     'Selank 5mg':                     { image: 'assets/products/selank-5mg.webp',             link: 'product-selank.html' },
     'Semax 5mg':                      { image: 'assets/products/semax-5mg.webp',              link: 'product-semax.html' },
     'Sermorelin 5mg':                 { image: 'assets/products/sermorelin-5mg.webp',         link: 'product-sermorelin.html' },
@@ -230,10 +235,10 @@
     if (has3Pack && !has7Pack) {
       upsellHtml = `
         <div class="upsell-banner">
-          <div class="upsell-banner-label">Limited Time Upgrade</div>
-          <div class="upsell-banner-title">Get 7 More For The Price Of 2!</div>
-          <div class="upsell-banner-price">7 Vials — <strong>$399.99</strong> ($57/vial)</div>
-          <button class="upsell-banner-btn" id="cartUpsellBtn">Upgrade &amp; Save More</button>
+          <div class="upsell-banner-label">Limited Time — GLP-3 RT Upgrade</div>
+          <div class="upsell-banner-title">Add 7 More GLP-3 RT Vials For The Price Of 2!</div>
+          <div class="upsell-banner-price">+7 Vials of GLP-3 RT (10mg) — <strong>$399.99</strong> ($57/vial)</div>
+          <button class="upsell-banner-btn" id="cartUpsellBtn">Add Upgrade to Cart</button>
         </div>
       `;
     }
@@ -257,10 +262,9 @@
     var upsellBtn = document.getElementById('cartUpsellBtn');
     if (upsellBtn) {
       upsellBtn.addEventListener('click', function() {
-        removeFromCart('glp3rt-3pack');
         addToCart({
           id: 'glp3rt-7pack',
-          name: 'Retatrutide (GLP-3 RT) 10mg — 7 Vials',
+          name: 'Retatrutide (GLP-3 RT) 10mg — 7 Vials (Upgrade)',
           price: 399.99,
           image: 'assets/products/glp3rt.webp',
           link: 'product-glp3rt.html',
