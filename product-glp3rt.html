@@ -114,22 +114,6 @@
             Add to Cart — $199.99
           </button>
 
-          <!-- UPSELL OFFER -->
-          <div class="pdp-offer-card pdp-offer-upgrade" id="offerUpgrade">
-            <div class="pdp-offer-badge pdp-offer-badge-urgent">Limited Time</div>
-            <div class="pdp-offer-header">
-              <div class="pdp-offer-title">Get 7 More For The Price Of 2!</div>
-              <div class="pdp-offer-subtitle">7 Vials of GLP-3 RT (10mg each)</div>
-            </div>
-            <div class="pdp-offer-pricing">
-              <span class="pdp-offer-price">$399.99</span>
-              <span class="pdp-offer-per">$57 / vial</span>
-            </div>
-            <button class="pdp-upgrade-btn" id="addUpgradeBtn">
-              Upgrade &amp; Save More &rarr;
-            </button>
-          </div>
-
           <div class="pdp-research-notice">
             <div class="pdp-research-notice-title">Research Use Only</div>
             <p>This product is intended strictly for research and laboratory use only. Not for human consumption, medical use, or diagnostic purposes.</p>
@@ -277,37 +261,15 @@
       offerType: 'attraction'
     };
 
-    var UPGRADE = {
-      id: 'glp3rt-7pack',
-      name: 'Retatrutide (GLP-3 RT) 10mg — 7 Vials',
-      price: 399.99,
-      image: 'assets/products/glp3rt.webp',
-      link: 'product-glp3rt.html',
-      quantity: 1,
-      isOffer: true,
-      offerType: 'upgrade'
-    };
-
     // Attraction offer button
     var addBtn = document.getElementById('addAttractionBtn');
     if (addBtn) {
+      addBtn._cartWired = true; // prevent generic PDP handler from also firing
       addBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        // Remove any existing GLP3RT packs first
+        // Only allow one 3-pack in cart
         cart.removeFromCart('glp3rt-3pack');
-        cart.removeFromCart('glp3rt-7pack');
         cart.addToCart(ATTRACTION);
-      });
-    }
-
-    // Upgrade button
-    var upgradeBtn = document.getElementById('addUpgradeBtn');
-    if (upgradeBtn) {
-      upgradeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        cart.removeFromCart('glp3rt-3pack');
-        cart.removeFromCart('glp3rt-7pack');
-        cart.addToCart(UPGRADE);
       });
     }
   })();
