@@ -1,0 +1,32 @@
+type,product_name,product_sku,product_price,product_description,product_quantity,product_is_inventory_tracked
+product,Retatrutide (GLP-3 RT) 10mg,GLP3RT-10MG,199.99,"High-purity Retatrutide (GLP-3 RT) 10mg injectable lyophilized peptide. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,BPC-157 5mg,BPC157-5MG,42.99,"High-purity BPC-157 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,BPC-157 10mg,BPC157-10MG,72.99,"High-purity BPC-157 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,TB-500 5mg,TB500-5MG,44.99,"High-purity TB-500 (Thymosin Beta-4) 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,SS-31 5mg,SS31-5MG,54.99,"High-purity SS-31 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Wolverine Blend (BPC-157 / TB-500),WOLVERINE-BLEND,79.99,"High-purity BPC-157 + TB-500 research blend. Lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Tirzepatide 10mg,TIRZ-10MG,89.99,"High-purity Tirzepatide 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,AOD-9604 5mg,AOD9604-5MG,38.99,"High-purity AOD-9604 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,5-Amino-1MQ 50mg,5AMINO-50MG,49.99,"High-purity 5-Amino-1MQ 50mg oral research compound. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,MOTS-c 10mg,MOTSC-10MG,59.99,"High-purity MOTS-c 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,L-Carnitine 500mg,LCAR-500MG,29.99,"High-purity L-Carnitine 500mg lyophilized vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,KLOW 80mg (GLP/GIP + GHK-Cu Blend),KLOW-80MG,99.99,"High-purity KLOW 80mg research blend combining GLP/GIP peptides with GHK-Cu. Lyophilized vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Ipamorelin 10mg,IPA-10MG,39.99,"High-purity Ipamorelin 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Sermorelin 5mg,SERM-5MG,36.99,"High-purity Sermorelin 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,CJC-1295 No DAC 5mg,CJC-NODAC-5MG,39.99,"High-purity CJC-1295 No DAC 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,CJC-1295 DAC 5mg,CJC-DAC-5MG,44.99,"High-purity CJC-1295 DAC 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,CJC-1295 No DAC + Ipamorelin Blend,CJCIPA-BLEND,64.99,"High-purity CJC-1295 No DAC + Ipamorelin research blend. Lyophilized vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Tesamorelin 10mg,TESA-10MG,69.99,"High-purity Tesamorelin 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,IGF-1 LR3 1mg,IGF1LR3-1MG,79.99,"High-purity IGF-1 LR3 1mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,HCG 5000 IU,HCG-5000IU,49.99,"High-purity HCG 5000 IU lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Kisspeptin 10mg,KISS-10MG,54.99,"High-purity Kisspeptin 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Selank 5mg,SELANK-5MG,34.99,"High-purity Selank 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Semax 5mg,SEMAX-5MG,36.99,"High-purity Semax 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,DSIP 5mg,DSIP-5MG,32.99,"High-purity DSIP (Delta Sleep-Inducing Peptide) 5mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Epithalon 10mg,EPITH-10MG,44.99,"High-purity Epithalon 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,NAD+ 500mg,NAD-500MG,64.99,"High-purity NAD+ 500mg lyophilized vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,GHK-Cu,GHKCU,39.99,"High-purity GHK-Cu lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Glow Blend 70mg,GLOW-70MG,84.99,"High-purity Glow Blend 70mg research peptide blend. Lyophilized vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,MT-1 10mg,MT1-10MG,39.99,"High-purity Melanotan-1 (MT-1) 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,MT-2 10mg,MT2-10MG,34.99,"High-purity Melanotan-2 (MT-2) 10mg lyophilized peptide vial. 99%+ purity, HPLC verified. For in-vitro research use only. Not for human consumption.",999,TRUE
+product,Bacteriostatic Water 30mL,BACWATER-30ML,9.99,"Bacteriostatic Water 30mL for research peptide reconstitution. For laboratory use only.",999,TRUE

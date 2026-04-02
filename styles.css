@@ -1688,6 +1688,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: grid; grid-template-columns: 1fr 400px;
   gap: 48px; align-items: start;
 }
+.checkout-layout--single {
+  display: flex; justify-content: center;
+  grid-template-columns: unset;
+}
+.checkout-layout--single .checkout-summary {
+  width: 100%; max-width: 480px;
+}
 
 .checkout-section {
   margin-bottom: 36px;
