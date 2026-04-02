@@ -898,7 +898,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
   margin-bottom: 48px;
 }
-.footer-brand .logo img { height: 40px; width: auto; }
+.footer-brand .logo img { height: 40px; width: auto; filter: brightness(0) invert(1); }
 .footer-brand p { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 16px; line-height: 1.6; }
 .footer-col h4 {
   font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
