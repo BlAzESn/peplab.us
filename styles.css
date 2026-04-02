@@ -791,9 +791,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: flex; align-items: center; gap: 8px;
 }
 .pdp-option-tag {
+  display: inline-block; white-space: nowrap;
   font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1px; background: var(--accent); color: #fff;
-  padding: 2px 8px; border-radius: 3px;
+  letter-spacing: 0.5px; background: var(--accent); color: #fff;
+  padding: 3px 8px; border-radius: 4px; margin-top: 3px;
 }
 .pdp-option-subtitle { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
 .pdp-option-price {
