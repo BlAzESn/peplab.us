@@ -300,11 +300,26 @@
     var optSingle = document.getElementById('optSingle');
     var optTriple = document.getElementById('optTriple');
 
+    var IMAGES = {
+      single: { src: 'assets/products/glp3rt.webp',          alt: 'Retatrutide (GLP-3 RT) 10mg' },
+      triple: { src: 'assets/products/GLP-3 RT B1GOF.png',   alt: 'Retatrutide (GLP-3 RT) 10mg — Buy 1 Get 2 Free' }
+    };
+
     function selectOption(key) {
       selected = key;
       optSingle.classList.toggle('selected', key === 'single');
       optTriple.classList.toggle('selected', key === 'triple');
       if (btnLabel) btnLabel.textContent = 'Add to Cart — $' + OPTIONS[key].price.toFixed(2);
+
+      // Swap main image
+      var mainImg = document.getElementById('pdpMainImg');
+      var img = IMAGES[key];
+      if (mainImg) { mainImg.src = img.src; mainImg.alt = img.alt; }
+
+      // Sync active thumbnail
+      document.querySelectorAll('.pdp-thumb').forEach(function(t) {
+        t.classList.toggle('active', t.dataset.img === img.src);
+      });
     }
 
     optSingle.addEventListener('click', function() { selectOption('single'); });
