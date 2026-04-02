@@ -97,6 +97,7 @@
     'MT-2 10mg':                      { image: 'assets/products/mt2-10mg.webp',               link: 'product-mt2.html' },
     'NAD+ 500mg':                     { image: 'assets/products/nad-500mg.webp',              link: 'product-nad.html' },
     'Retatrutide (GLP-3 RT) 10mg':    { image: 'assets/products/glp3rt.webp',                 link: 'product-glp3rt.html' },
+    'Retatrutide (GLP-3 RT) 10mg — 1 Vial':  { image: 'assets/products/glp3rt.webp',  link: 'product-glp3rt.html' },
     'Retatrutide (GLP-3 RT) 10mg — 3 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
     'Retatrutide (GLP-3 RT) 10mg — 7 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
     'Retatrutide (GLP-3 RT) 10mg — 7 Vials (Upgrade)': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },

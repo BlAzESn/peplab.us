@@ -754,6 +754,58 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .pdp-offer-upgrade .pdp-offer-per { color: #92400e; background: #fef3c7; }
 .pdp-offer-savings { font-size: 0.8rem; color: #16a34a; font-weight: 600; }
+
+/* ── PDP Pack Option Selector ── */
+.pdp-option-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--text-muted); margin-bottom: 10px;
+}
+.pdp-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.pdp-option-card {
+  border: 2px solid var(--border); border-radius: var(--radius);
+  padding: 16px 20px; cursor: pointer;
+  display: flex; align-items: center; gap: 14px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.18s, background 0.18s;
+  background: #fff;
+}
+.pdp-option-card:hover { border-color: #c5d1e0; }
+.pdp-option-card.selected {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, #f0f4ff 0%, #fff 100%);
+}
+.pdp-option-radio {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--border); flex-shrink: 0;
+  transition: border-color 0.18s; position: relative;
+}
+.pdp-option-card.selected .pdp-option-radio { border-color: var(--accent); }
+.pdp-option-card.selected .pdp-option-radio::after {
+  content: ''; position: absolute;
+  width: 8px; height: 8px; background: var(--accent);
+  border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.pdp-option-info { flex: 1; }
+.pdp-option-title {
+  font-size: 0.95rem; font-weight: 700; color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.pdp-option-tag {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; background: var(--accent); color: #fff;
+  padding: 2px 8px; border-radius: 3px;
+}
+.pdp-option-subtitle { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+.pdp-option-price {
+  font-size: 1.2rem; font-weight: 800; color: var(--text); white-space: nowrap;
+}
+.pdp-option-card.selected .pdp-option-price { color: var(--accent); }
+.pdp-option-best {
+  position: absolute; top: 0; right: 0;
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; background: var(--accent); color: #fff;
+  padding: 3px 10px; border-radius: 0 var(--radius) 0 6px;
+}
 .pdp-upgrade-btn {
   width: 100%; padding: 14px; border: 2px solid #f59e0b;
   background: #fff; color: #92400e; font-size: 0.9rem; margin-top: 12px;
