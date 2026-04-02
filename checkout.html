@@ -143,6 +143,12 @@
   <script>
   (function() {
     // PepLab product name → Ecwid product ID mapping
+    // Required Ecwid product options keyed by cart item name
+    var ECWID_OPTIONS = {
+      'Retatrutide (GLP-3 RT) 10mg — 1 Vial':  { 'Pack Size': '1 Vial' },
+      'Retatrutide (GLP-3 RT) 10mg — 3 Vials': { 'Pack Size': '3 Vials (Buy 1 Get 2 Free)+' }
+    };
+
     var ECWID_IDS = {
       'Retatrutide (GLP-3 RT) 10mg': 826704048,
       'Retatrutide (GLP-3 RT) 10mg — 1 Vial': 826704048,
@@ -254,7 +260,7 @@
 
           var done = 0;
           toAdd.forEach(function(item) {
-            Ecwid.Cart.addProduct({
+            var productPayload = {
               id: ECWID_IDS[item.name],
               quantity: item.quantity,
               callback: function() {
@@ -264,7 +270,11 @@
                   enableOrderBtn();
                 }
               }
-            });
+            };
+            if (ECWID_OPTIONS[item.name]) {
+              productPayload.options = ECWID_OPTIONS[item.name];
+            }
+            Ecwid.Cart.addProduct(productPayload);
           });
         });
       }
