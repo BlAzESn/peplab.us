@@ -145,6 +145,8 @@
     // PepLab product name → Ecwid product ID mapping
     var ECWID_IDS = {
       'Retatrutide (GLP-3 RT) 10mg': 826704048,
+      'Retatrutide (GLP-3 RT) 10mg — 1 Vial': 826704048,
+      'Retatrutide (GLP-3 RT) 10mg — 3 Vials': 826704048,
       'BPC-157 5mg': 826704047,
       'BPC-157 10mg': 826704045,
       'TB-500 5mg': 826704043,
@@ -215,13 +217,22 @@
     // Render totals
     var subtotal = cart.getCartTotal();
     var freeShipping = subtotal >= 250;
-    var shipping = freeShipping ? 0 : 12.99;
+    var shipping = freeShipping ? 0 : 20.00;
     var total = subtotal + shipping;
 
     totalsEl.innerHTML =
       '<div class="checkout-summary-row"><span>Subtotal</span><span>$' + subtotal.toFixed(2) + '</span></div>' +
       '<div class="checkout-summary-row"><span>Shipping</span><span' + (freeShipping ? ' class="free"' : '') + '>' + (freeShipping ? 'FREE' : '$' + shipping.toFixed(2)) + '</span></div>' +
       '<div class="checkout-summary-row total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
+
+    function enableOrderBtn() {
+      if (loadingEl) loadingEl.style.display = 'none';
+      orderBtn.disabled = false;
+      orderBtn.textContent = 'Proceed to Payment';
+    }
+
+    // Safety net: enable button after 6 seconds no matter what
+    var safetyTimer = setTimeout(enableOrderBtn, 6000);
 
     // Initialize Ecwid and sync cart
     function syncCartToEcwid() {
@@ -230,38 +241,40 @@
         return;
       }
 
-      Ecwid.OnAPILoaded.add(function() {
-        // Clear Ecwid cart first
+      function doSync() {
         Ecwid.Cart.clear(function() {
-          var pending = items.length;
-          var added = 0;
+          var toAdd = items.filter(function(item) { return !!ECWID_IDS[item.name]; });
 
-          items.forEach(function(item) {
-            var ecwidId = ECWID_IDS[item.name];
-            if (!ecwidId) {
-              pending--;
-              return;
-            }
+          // If nothing maps to Ecwid, just enable the button
+          if (toAdd.length === 0) {
+            clearTimeout(safetyTimer);
+            enableOrderBtn();
+            return;
+          }
+
+          var done = 0;
+          toAdd.forEach(function(item) {
             Ecwid.Cart.addProduct({
-              id: ecwidId,
+              id: ECWID_IDS[item.name],
               quantity: item.quantity,
-              callback: function(success) {
-                added++;
-                if (added >= pending) {
-                  // All items synced - enable checkout
-                  if (loadingEl) loadingEl.style.display = 'none';
-                  orderBtn.disabled = false;
-                  orderBtn.textContent = 'Proceed to Payment';
+              callback: function() {
+                done++;
+                if (done >= toAdd.length) {
+                  clearTimeout(safetyTimer);
+                  enableOrderBtn();
                 }
               }
             });
           });
-
-          if (pending === 0) {
-            if (loadingEl) loadingEl.innerHTML = '<p style="color:var(--text-muted);">Some items could not be synced. Please try again.</p>';
-          }
         });
-      });
+      }
+
+      // Handle both: API already loaded and not yet loaded
+      if (Ecwid.Cart && typeof Ecwid.Cart.clear === 'function') {
+        doSync();
+      } else {
+        Ecwid.OnAPILoaded.add(doSync);
+      }
     }
 
     syncCartToEcwid();
