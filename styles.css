@@ -801,10 +801,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .pdp-option-card.selected .pdp-option-price { color: var(--accent); }
 .pdp-option-best {
-  position: absolute; top: 0; right: 0;
+  position: absolute; top: -1px; right: -1px;
   font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 1px; background: var(--accent); color: #fff;
-  padding: 3px 10px; border-radius: 0 var(--radius) 0 6px;
+  padding: 5px 12px; border-radius: 0 var(--radius) 0 8px;
 }
 .pdp-upgrade-btn {
   width: 100%; padding: 14px; border: 2px solid #f59e0b;
