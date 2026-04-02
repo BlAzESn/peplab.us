@@ -145,11 +145,13 @@
     // PepLab product name → Ecwid product ID mapping
     // Required Ecwid product options keyed by cart item name
     var ECWID_OPTIONS = {
+      'Retatrutide (GLP-3 RT) 10mg':            { 'Pack Size': '1 Vial' },
       'Retatrutide (GLP-3 RT) 10mg — 1 Vial':  { 'Pack Size': '1 Vial' },
       'Retatrutide (GLP-3 RT) 10mg — 3 Vials': { 'Pack Size': '3 Vials (Buy 1 Get 2 Free)+' }
     };
 
     var ECWID_IDS = {
+      // Canonical names (matching shop data-name attributes and ECWID catalog)
       'Retatrutide (GLP-3 RT) 10mg': 826704048,
       'Retatrutide (GLP-3 RT) 10mg — 1 Vial': 826704048,
       'Retatrutide (GLP-3 RT) 10mg — 3 Vials': 826704048,
@@ -182,8 +184,36 @@
       'Glow Blend 70mg': 826704507,
       'MT-1 10mg': 826704508,
       'MT-2 10mg': 826703240,
-      'Bacteriostatic Water': 826703244
+      'Bacteriostatic Water': 826703244,
+      'Bacteriostatic Water 30mL': 826703244
     };
+
+    // Aliases for product names from PDPs and shop h3 tags which may differ
+    var ECWID_ALIASES = {
+      'Wolverine Blend (BPC-157 + TB-500)': 'Wolverine Blend',
+      'Wolverine (BPC157/TB500 Blend)':     'Wolverine Blend',
+      'KLOW Blend (80mg)':                   'Klow Blend 80mg',
+      'KLOW 80mg (GLP/GIP + GHK-Cu Blend)': 'Klow Blend 80mg',
+      'CJC-1295 No DAC + Ipamorelin Blend':         'CJC-1295 Ipamorelin Blend',
+      'CJC-1295 No DAC + Ipamorelin (5mg/5mg)':     'CJC-1295 Ipamorelin Blend',
+      'CJC 1295 No DAC 5mg':               'CJC-1295 No DAC 5mg',
+      'Bacteriostatic Water (30mL)':        'Bacteriostatic Water'
+    };
+
+    // Resolve a cart item name to an Ecwid product ID
+    function getEcwidId(name) {
+      if (ECWID_IDS[name]) return ECWID_IDS[name];
+
+      // Try explicit alias first
+      var alias = ECWID_ALIASES[name];
+      if (alias && ECWID_IDS[alias]) return ECWID_IDS[alias];
+
+      // Normalize: "Product (Xmg)" → "Product Xmg" (handles dosage in parens at end)
+      var normalized = name.replace(/\s*\((\d[^)]+)\)\s*$/, ' $1').trim();
+      if (ECWID_IDS[normalized]) return ECWID_IDS[normalized];
+
+      return null;
+    }
 
     var cart = window.PepLabCart;
     if (!cart) return;
@@ -249,7 +279,7 @@
 
       function doSync() {
         Ecwid.Cart.clear(function() {
-          var toAdd = items.filter(function(item) { return !!ECWID_IDS[item.name]; });
+          var toAdd = items.filter(function(item) { return !!getEcwidId(item.name); });
 
           // If nothing maps to Ecwid, just enable the button
           if (toAdd.length === 0) {
@@ -261,7 +291,7 @@
           var done = 0;
           toAdd.forEach(function(item) {
             var productPayload = {
-              id: ECWID_IDS[item.name],
+              id: getEcwidId(item.name),
               quantity: item.quantity,
               callback: function() {
                 done++;

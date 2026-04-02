@@ -347,7 +347,7 @@
 
   // From a shop/index product card
   function extractFromCard(card) {
-    const name = card.querySelector('.product-info h3')?.textContent?.trim() || 'Product';
+    const name = card.dataset.name || card.querySelector('.product-info h3')?.textContent?.trim() || 'Product';
     const priceText = card.querySelector('.product-price')?.textContent?.trim() || '0';
     const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
     const img = card.querySelector('.product-photo');
