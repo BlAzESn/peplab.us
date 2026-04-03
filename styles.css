@@ -2072,9 +2072,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 /* ===== QUALITY TABS SECTION ===== */
-.quality-section { padding: 80px 0; background: #fff; border-top: 1px solid var(--border); }
+.quality-section { padding: 80px 0; background: #fff; border-top: 1px solid var(--border); overflow: hidden; }
 .quality-inner { display: grid; grid-template-columns: 260px 1fr; gap: 64px; align-items: start; }
-.quality-stats { position: sticky; top: 100px; }
+.quality-stats { position: sticky; top: 100px; min-width: 0; }
+.quality-tabs-wrap { min-width: 0; }
 .quality-big-stat { font-size: 4.5rem; font-weight: 900; color: var(--text); line-height: 1; letter-spacing: -2px; }
 .quality-big-stat span { color: var(--accent); }
 .quality-big-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-top: 8px; }
@@ -2117,16 +2118,24 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .quality-result-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 1.2s ease; width: 0; }
 .quality-result-bar-fill.animated { width: var(--bar-w); }
 @media (max-width: 900px) {
-  .quality-inner { grid-template-columns: 1fr; gap: 32px; }
-  .quality-stats { position: static; }
-  .quality-big-stat { font-size: 3.5rem; }
+  .quality-inner { grid-template-columns: 1fr; gap: 36px; }
+  .quality-stats { position: static; max-width: 100%; }
+  .quality-big-stat { font-size: 3.2rem; letter-spacing: -1px; }
 }
 @media (max-width: 580px) {
-  .quality-section { padding: 52px 0; }
-  .quality-big-stat { font-size: 3rem; }
-  .quality-mini-stats { gap: 10px; }
+  .quality-section { padding: 48px 0; }
+  .quality-inner { gap: 28px; }
+  .quality-big-stat { font-size: 2.8rem; letter-spacing: -1px; }
+  .quality-big-label { font-size: 0.74rem; }
+  .quality-mini-stats { gap: 10px; margin-top: 20px; }
+  .quality-mini-stat { padding: 12px 14px; gap: 12px; }
+  .quality-mini-stat-num { font-size: 1.2rem; }
+  .quality-mini-stat-label { font-size: 0.78rem; }
   .quality-tabs-nav { gap: 0; }
-  .quality-tab-btn { padding: 10px 14px; font-size: 0.8rem; }
+  .quality-tab-btn { padding: 10px 12px; font-size: 0.78rem; }
+  .quality-tab-heading { font-size: 1.05rem; }
+  .quality-tab-text { font-size: 0.86rem; }
+  .quality-test-badge { font-size: 0.76rem; padding: 5px 10px; }
 }
 
 /* ===== NEWSLETTER SECTION ===== */
@@ -2221,8 +2230,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 /* ===== PDP PAYMENT ICONS ===== */
-.pdp-payment-row { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 14px; }
-.pdp-payment-label { font-size: 0.74rem; color: var(--text-muted); font-weight: 500; margin-right: 2px; }
+.pdp-payment-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.pdp-payment-label { font-size: 0.74rem; color: var(--text-muted); font-weight: 500; margin-right: 4px; }
 .pdp-pay-icon {
   height: 22px; padding: 0 7px;
   background: #fff; border: 1px solid var(--border); border-radius: 4px;
