@@ -686,7 +686,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .pdp-research-notice {
   background: var(--primary-dark); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+  border-radius: var(--radius); padding: 20px; margin-top: 20px; margin-bottom: 20px;
 }
 .pdp-research-notice-title {
   font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
@@ -1451,7 +1451,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .pdp-research-notice {
   background: var(--primary-dark); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+  border-radius: var(--radius); padding: 20px; margin-top: 20px; margin-bottom: 20px;
 }
 .pdp-research-notice-title {
   font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
