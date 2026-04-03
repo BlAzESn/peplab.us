@@ -236,9 +236,9 @@
     if (has3Pack && !has7Pack) {
       upsellHtml = `
         <div class="upsell-banner">
-          <div class="upsell-banner-label">Limited Time — GLP-3 RT Upgrade</div>
+          <div class="upsell-banner-label">Limited Time: GLP-3 RT Upgrade</div>
           <div class="upsell-banner-title">Add 7 More GLP-3 RT Vials For The Price Of 2!</div>
-          <div class="upsell-banner-price">+7 Vials of GLP-3 RT (10mg) — <strong>$399.99</strong> ($57/vial)</div>
+          <div class="upsell-banner-price">+7 Vials of GLP-3 RT (10mg) · <strong>$399.99</strong> ($57/vial)</div>
           <button class="upsell-banner-btn" id="cartUpsellBtn">Add Upgrade to Cart</button>
         </div>
       `;
