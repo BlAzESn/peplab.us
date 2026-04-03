@@ -256,8 +256,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     entries.forEach(function(e) {
       if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
   els.forEach(function(el) { io.observe(el); });
+  // Safety net: reveal all still-hidden elements after 1.5s (handles scroll-past on mobile)
+  setTimeout(function() {
+    document.querySelectorAll('.scroll-reveal:not(.revealed)').forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }, 1500);
 })();
 
 // ===== QUALITY TABS =====
