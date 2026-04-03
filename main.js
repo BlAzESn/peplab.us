@@ -247,3 +247,79 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 })();
+
+// ===== SCROLL REVEAL =====
+(function() {
+  var els = document.querySelectorAll('.scroll-reveal');
+  if (!els.length) return;
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function(el) { io.observe(el); });
+})();
+
+// ===== QUALITY TABS =====
+(function() {
+  var tabs = document.querySelectorAll('.quality-tab-btn');
+  if (!tabs.length) return;
+  tabs.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = btn.dataset.tab;
+      tabs.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.quality-tab-pane').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      var pane = document.getElementById('qtab-' + target);
+      if (pane) {
+        pane.classList.add('active');
+        // animate bars inside this pane
+        pane.querySelectorAll('.quality-result-bar-fill').forEach(function(f) {
+          f.classList.remove('animated');
+          requestAnimationFrame(function() { requestAnimationFrame(function() { f.classList.add('animated'); }); });
+        });
+      }
+    });
+  });
+  // Animate bars in initial active pane
+  document.querySelectorAll('.quality-tab-pane.active .quality-result-bar-fill').forEach(function(f) {
+    setTimeout(function() { f.classList.add('animated'); }, 300);
+  });
+})();
+
+// ===== ANIMATE TRIAL BARS ON SCROLL =====
+(function() {
+  var fills = document.querySelectorAll('.pdp-trial-bar-fill');
+  if (!fills.length) return;
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('animated');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  fills.forEach(function(f) { io.observe(f); });
+})();
+
+// ===== NEWSLETTER FORM =====
+(function() {
+  var form = document.getElementById('newsletterForm');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var input = form.querySelector('.newsletter-input');
+    var btn = form.querySelector('.newsletter-btn');
+    if (!input || !input.value.includes('@')) { input && input.focus(); return; }
+    btn.textContent = 'Subscribed!';
+    btn.style.background = '#16a34a';
+    input.value = '';
+    input.disabled = true;
+    btn.disabled = true;
+  });
+})();
+
+// ===== PDP PAGE FAQ (reuses global FAQ accordion logic) =====
+// Already handled by existing FAQ accordion logic above (querySelectorAll('.faq-question'))
