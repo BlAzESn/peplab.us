@@ -2232,8 +2232,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ===== PDP PAYMENT ICONS ===== */
 .pdp-payment-row {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  margin-top: 16px; padding-top: 16px;
-  border-top: 1px solid var(--border);
+  margin-top: 16px; padding-top: 16px; margin-bottom: 20px;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding-bottom: 16px;
 }
 .pdp-payment-label { font-size: 0.74rem; color: var(--text-muted); font-weight: 500; margin-right: 4px; }
 .pdp-pay-icon {
