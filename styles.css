@@ -951,8 +951,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
   margin-bottom: 48px;
 }
-.footer-brand .logo img { height: 40px; width: auto; }
-.footer-brand p { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 16px; line-height: 1.6; }
+.footer-brand .logo { margin-bottom: 20px; }
+.footer-brand .logo img { height: 36px; width: auto; display: block; }
+.footer-brand p { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 0; line-height: 1.6; }
 .footer-col h4 {
   font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
   color: rgba(255,255,255,0.35); margin-bottom: 20px; font-weight: 600;
