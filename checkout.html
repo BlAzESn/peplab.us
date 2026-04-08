@@ -82,6 +82,16 @@
             <!-- Populated by JS -->
           </div>
 
+          <!-- PROMO CODE -->
+          <div class="checkout-promo" id="promoSection">
+            <button class="checkout-promo-toggle" id="promoToggle" type="button">+ Have a promo code?</button>
+            <div id="promoInputRow" class="checkout-promo-row" style="display:none;">
+              <input type="text" id="promoCodeInput" placeholder="ENTER CODE" autocomplete="off">
+              <button class="checkout-promo-apply" id="promoApplyBtn" type="button">Apply</button>
+            </div>
+            <div class="checkout-promo-msg" id="promoMsg"></div>
+          </div>
+
           <button class="checkout-place-order" id="placeOrderBtn" disabled>Place Order</button>
           <div class="checkout-research-notice">
             All products are for research and laboratory use only.<br>
@@ -310,14 +320,76 @@
 
     syncCartToEcwid();
 
-    // Place order button -> go to Ecwid checkout
+    // Promo code toggle
+    var promoToggle = document.getElementById('promoToggle');
+    var promoInputRow = document.getElementById('promoInputRow');
+    var promoApplyBtn = document.getElementById('promoApplyBtn');
+    var promoCodeInput = document.getElementById('promoCodeInput');
+    var promoMsg = document.getElementById('promoMsg');
+    var appliedCoupon = null;
+
+    if (promoToggle) {
+      promoToggle.addEventListener('click', function() {
+        var visible = promoInputRow.style.display !== 'none';
+        promoInputRow.style.display = visible ? 'none' : 'flex';
+        if (!visible) promoCodeInput.focus();
+      });
+    }
+
+    if (promoApplyBtn) {
+      promoApplyBtn.addEventListener('click', function() {
+        var code = promoCodeInput.value.trim().toUpperCase();
+        if (!code) return;
+
+        promoApplyBtn.textContent = 'Checking...';
+        promoApplyBtn.disabled = true;
+        promoMsg.className = 'checkout-promo-msg';
+        promoMsg.textContent = '';
+
+        if (typeof Ecwid !== 'undefined' && Ecwid.Cart && typeof Ecwid.Cart.setCouponCode === 'function') {
+          Ecwid.Cart.setCouponCode(code, function(result) {
+            promoApplyBtn.textContent = 'Apply';
+            promoApplyBtn.disabled = false;
+            if (result && result.status === 'APPLIED') {
+              appliedCoupon = code;
+              promoMsg.className = 'checkout-promo-msg success';
+              promoMsg.textContent = 'Code "' + code + '" applied!';
+              promoToggle.textContent = 'Promo code applied: ' + code;
+            } else {
+              appliedCoupon = null;
+              promoMsg.className = 'checkout-promo-msg error';
+              promoMsg.textContent = 'Invalid or expired code. Please try again.';
+            }
+          });
+        } else {
+          // Ecwid not ready — store it and apply at checkout time
+          appliedCoupon = code;
+          promoApplyBtn.textContent = 'Apply';
+          promoApplyBtn.disabled = false;
+          promoMsg.className = 'checkout-promo-msg success';
+          promoMsg.textContent = 'Code "' + code + '" will be applied at checkout.';
+          promoToggle.textContent = 'Promo code saved: ' + code;
+        }
+      });
+    }
+
+    // Place order button -> apply coupon if set, then go to Ecwid checkout
     orderBtn.addEventListener('click', function(e) {
       e.preventDefault();
       orderBtn.disabled = true;
       orderBtn.textContent = 'Redirecting to payment...';
 
-      if (typeof Ecwid !== 'undefined') {
-        Ecwid.Cart.gotoCheckout();
+      function proceed() {
+        if (typeof Ecwid !== 'undefined') {
+          Ecwid.Cart.gotoCheckout();
+        }
+      }
+
+      // If a coupon was entered but not yet confirmed via API, apply it now
+      if (appliedCoupon && typeof Ecwid !== 'undefined' && Ecwid.Cart && typeof Ecwid.Cart.setCouponCode === 'function') {
+        Ecwid.Cart.setCouponCode(appliedCoupon, function() { proceed(); });
+      } else {
+        proceed();
       }
     });
   })();
