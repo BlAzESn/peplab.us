@@ -82,17 +82,10 @@
             <!-- Populated by JS -->
           </div>
 
-          <!-- PROMO CODE -->
-          <div class="checkout-promo" id="promoSection">
-            <button class="checkout-promo-toggle" id="promoToggle" type="button">+ Have a promo code?</button>
-            <div id="promoInputRow" class="checkout-promo-row" style="display:none;">
-              <input type="text" id="promoCodeInput" placeholder="ENTER CODE" autocomplete="off">
-              <button class="checkout-promo-apply" id="promoApplyBtn" type="button">Apply</button>
-            </div>
-            <div class="checkout-promo-msg" id="promoMsg"></div>
-          </div>
-
           <button class="checkout-place-order" id="placeOrderBtn" disabled>Place Order</button>
+          <div style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:10px;">
+            🏷️ Have a promo code? Enter it on the next payment screen.
+          </div>
           <div class="checkout-research-notice">
             All products are for research and laboratory use only.<br>
             By placing this order, you confirm these products will not be used for human consumption.
@@ -320,102 +313,13 @@
 
     syncCartToEcwid();
 
-    // ── Promo codes (add new codes here: 'CODE': discountFraction) ──
-    var PROMO_CODES = {
-      'AXGY3N': 0.10
-    };
-    var appliedDiscount = 0;
-    var appliedCode = null;
-
-    // Promo code toggle
-    var promoToggle = document.getElementById('promoToggle');
-    var promoInputRow = document.getElementById('promoInputRow');
-    var promoApplyBtn = document.getElementById('promoApplyBtn');
-    var promoCodeInput = document.getElementById('promoCodeInput');
-    var promoMsg = document.getElementById('promoMsg');
-
-    function renderTotals(discountFraction) {
-      var subtotal = cart.getCartTotal();
-      var discount = subtotal * discountFraction;
-      var discounted = subtotal - discount;
-      var freeShipping = discounted >= 250;
-      var shipping = freeShipping ? 0 : 20.00;
-      var total = discounted + shipping;
-      var html =
-        '<div class="checkout-summary-row"><span>Subtotal</span><span>$' + subtotal.toFixed(2) + '</span></div>';
-      if (discount > 0) {
-        html += '<div class="checkout-summary-row"><span style="color:#16a34a;">Discount (' + Math.round(discountFraction * 100) + '% off)</span><span style="color:#16a34a;">−$' + discount.toFixed(2) + '</span></div>';
-      }
-      html +=
-        '<div class="checkout-summary-row"><span>Shipping</span><span' + (freeShipping ? ' class="free"' : '') + '>' + (freeShipping ? 'FREE' : '$' + shipping.toFixed(2)) + '</span></div>' +
-        '<div class="checkout-summary-row total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
-      totalsEl.innerHTML = html;
-    }
-
-    if (promoToggle) {
-      promoToggle.addEventListener('click', function() {
-        var hidden = promoInputRow.style.display === 'none';
-        promoInputRow.style.display = hidden ? 'flex' : 'none';
-        promoToggle.textContent = hidden ? '− Cancel' : '+ Have a promo code?';
-        if (hidden) promoCodeInput.focus();
-      });
-    }
-
-    if (promoApplyBtn) {
-      promoApplyBtn.addEventListener('click', function() {
-        var code = promoCodeInput.value.trim().toUpperCase();
-        if (!code) return;
-        promoMsg.className = 'checkout-promo-msg';
-        promoMsg.textContent = '';
-
-        if (PROMO_CODES[code] !== undefined) {
-          appliedDiscount = PROMO_CODES[code];
-          appliedCode = code;
-          var pct = Math.round(appliedDiscount * 100);
-          var saving = cart.getCartTotal() * appliedDiscount;
-
-          // Lock input
-          promoApplyBtn.textContent = 'Applied';
-          promoApplyBtn.disabled = true;
-          promoCodeInput.disabled = true;
-          promoToggle.textContent = '✓ ' + pct + '% off applied';
-
-          // Show success message
-          promoMsg.className = 'checkout-promo-msg success';
-          promoMsg.textContent = pct + '% off applied — you save $' + saving.toFixed(2) + '!';
-
-          // Re-render totals with discount
-          renderTotals(appliedDiscount);
-        } else {
-          appliedDiscount = 0;
-          appliedCode = null;
-          promoMsg.className = 'checkout-promo-msg error';
-          promoMsg.textContent = 'Invalid or expired code. Please try again.';
-        }
-      });
-    }
-
-    // Place order -> pass code as order comment to Ecwid, then checkout
+    // Place order -> go to Ecwid checkout
     orderBtn.addEventListener('click', function(e) {
       e.preventDefault();
       orderBtn.disabled = true;
       orderBtn.textContent = 'Redirecting to payment...';
-
-      function proceed() {
-        if (typeof Ecwid !== 'undefined') {
-          Ecwid.Cart.gotoCheckout();
-        }
-      }
-
-      if (appliedCode && typeof Ecwid !== 'undefined' && Ecwid.Cart) {
-        var comment = 'Promo code: ' + appliedCode + ' (' + Math.round(appliedDiscount * 100) + '% off)';
-        if (typeof Ecwid.Cart.setOrderComments === 'function') {
-          Ecwid.Cart.setOrderComments(comment, proceed);
-        } else {
-          proceed();
-        }
-      } else {
-        proceed();
+      if (typeof Ecwid !== 'undefined') {
+        Ecwid.Cart.gotoCheckout();
       }
     });
   })();
