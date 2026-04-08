@@ -2322,3 +2322,51 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 /* ===== JSON-LD hiding (no visual effect) ===== */
+
+/* ===== BACTERIOSTATIC WATER UPSELL POPUP ===== */
+.bac-upsell-popup {
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  width: 340px; background: #fff;
+  border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  border: 1px solid var(--border);
+  opacity: 0; transform: translateY(16px) scale(0.97);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.bac-upsell-popup.visible { opacity: 1; transform: none; pointer-events: auto; }
+.bac-upsell-close {
+  position: absolute; top: 10px; right: 10px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--primary-dark); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-muted); transition: background 0.2s;
+}
+.bac-upsell-close:hover { background: var(--border); }
+.bac-upsell-inner { display: flex; gap: 14px; padding: 20px; align-items: flex-start; }
+.bac-upsell-img { width: 72px; height: 72px; object-fit: cover; border-radius: 10px; flex-shrink: 0; border: 1px solid var(--border); }
+.bac-upsell-content { flex: 1; min-width: 0; }
+.bac-upsell-tag {
+  display: inline-block; font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--accent); background: var(--accent-light);
+  padding: 2px 8px; border-radius: 20px; margin-bottom: 6px;
+}
+.bac-upsell-title { font-size: 0.95rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.bac-upsell-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px; }
+.bac-upsell-price { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+.bac-upsell-original { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); text-decoration: line-through; margin-left: 4px; }
+.bac-upsell-actions { display: flex; gap: 8px; }
+.bac-upsell-yes {
+  flex: 1; padding: 9px 12px; background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; transition: background 0.2s;
+}
+.bac-upsell-yes:hover { background: var(--accent-hover); }
+.bac-upsell-no {
+  padding: 9px 12px; background: none; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); font-size: 0.78rem; color: var(--text-muted);
+  cursor: pointer; transition: border-color 0.2s;
+}
+.bac-upsell-no:hover { border-color: var(--text-muted); }
+@media (max-width: 480px) {
+  .bac-upsell-popup { width: calc(100vw - 32px); right: 16px; bottom: 16px; }
+}

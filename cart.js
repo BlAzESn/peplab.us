@@ -29,6 +29,14 @@
     saveCart(cart);
     openDrawer();
     showAddedFeedback();
+
+    // Upsell: offer Bacteriostatic Water if adding a peptide and water not already in cart
+    const BAC_ID = 'bacteriostatic-water';
+    const isWater = product.id === BAC_ID || (product.name || '').toLowerCase().includes('bacteriostatic');
+    const hasWater = getCart().some(i => i.id === BAC_ID);
+    if (!isWater && !hasWater) {
+      setTimeout(() => showBacWaterUpsell(), 600);
+    }
   }
 
   function removeFromCart(id) {
@@ -263,6 +271,59 @@
 
     const continueBtn = document.getElementById('cartContinue');
     if (continueBtn) continueBtn.addEventListener('click', closeDrawer);
+  }
+
+  // ─── Bacteriostatic Water Upsell Popup ───────────────────
+  function showBacWaterUpsell() {
+    if (document.getElementById('bacUpsell')) return;
+
+    const BAC = {
+      id: 'bacteriostatic-water',
+      name: 'Bacteriostatic Water',
+      price: 14.99,
+      image: 'assets/products/bacteriostatic-water.webp',
+      link: 'product-bacwater.html',
+      quantity: 1
+    };
+
+    const popup = document.createElement('div');
+    popup.id = 'bacUpsell';
+    popup.className = 'bac-upsell-popup';
+    popup.innerHTML = `
+      <button class="bac-upsell-close" id="bacUpsellClose" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="bac-upsell-inner">
+        <img src="assets/products/bacteriostatic-water.webp" alt="Bacteriostatic Water" class="bac-upsell-img">
+        <div class="bac-upsell-content">
+          <div class="bac-upsell-tag">Recommended Add-on</div>
+          <div class="bac-upsell-title">Add Bacteriostatic Water?</div>
+          <div class="bac-upsell-desc">Required to reconstitute your peptide. Don't forget it.</div>
+          <div class="bac-upsell-price">$14.99 <span class="bac-upsell-original">$19.99</span></div>
+          <div class="bac-upsell-actions">
+            <button class="bac-upsell-yes" id="bacUpsellYes">Yes, Add to Order</button>
+            <button class="bac-upsell-no" id="bacUpsellNo">No thanks</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+    requestAnimationFrame(() => popup.classList.add('visible'));
+
+    function dismiss() {
+      popup.classList.remove('visible');
+      setTimeout(() => popup.remove(), 300);
+    }
+
+    document.getElementById('bacUpsellClose').addEventListener('click', dismiss);
+    document.getElementById('bacUpsellNo').addEventListener('click', dismiss);
+    document.getElementById('bacUpsellYes').addEventListener('click', () => {
+      addToCart(BAC);
+      dismiss();
+    });
   }
 
   function openDrawer() {
