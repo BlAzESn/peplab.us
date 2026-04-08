@@ -320,13 +320,37 @@
 
     syncCartToEcwid();
 
+    // ── Promo codes (add new codes here: 'CODE': discountFraction) ──
+    var PROMO_CODES = {
+      'AXGY3N': 0.10
+    };
+    var appliedDiscount = 0;
+    var appliedCode = null;
+
     // Promo code toggle
     var promoToggle = document.getElementById('promoToggle');
     var promoInputRow = document.getElementById('promoInputRow');
     var promoApplyBtn = document.getElementById('promoApplyBtn');
     var promoCodeInput = document.getElementById('promoCodeInput');
     var promoMsg = document.getElementById('promoMsg');
-    var appliedCoupon = null;
+
+    function renderTotals(discountFraction) {
+      var subtotal = cart.getCartTotal();
+      var discount = subtotal * discountFraction;
+      var discounted = subtotal - discount;
+      var freeShipping = discounted >= 250;
+      var shipping = freeShipping ? 0 : 20.00;
+      var total = discounted + shipping;
+      var html =
+        '<div class="checkout-summary-row"><span>Subtotal</span><span>$' + subtotal.toFixed(2) + '</span></div>';
+      if (discount > 0) {
+        html += '<div class="checkout-summary-row"><span style="color:#16a34a;">Discount (' + Math.round(discountFraction * 100) + '% off)</span><span style="color:#16a34a;">−$' + discount.toFixed(2) + '</span></div>';
+      }
+      html +=
+        '<div class="checkout-summary-row"><span>Shipping</span><span' + (freeShipping ? ' class="free"' : '') + '>' + (freeShipping ? 'FREE' : '$' + shipping.toFixed(2)) + '</span></div>' +
+        '<div class="checkout-summary-row total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
+      totalsEl.innerHTML = html;
+    }
 
     if (promoToggle) {
       promoToggle.addEventListener('click', function() {
@@ -341,58 +365,37 @@
       promoApplyBtn.addEventListener('click', function() {
         var code = promoCodeInput.value.trim().toUpperCase();
         if (!code) return;
-
-        promoApplyBtn.textContent = 'Checking...';
-        promoApplyBtn.disabled = true;
         promoMsg.className = 'checkout-promo-msg';
         promoMsg.textContent = '';
 
-        function showApplied(discountAmount) {
+        if (PROMO_CODES[code] !== undefined) {
+          appliedDiscount = PROMO_CODES[code];
+          appliedCode = code;
+          var pct = Math.round(appliedDiscount * 100);
+          var saving = cart.getCartTotal() * appliedDiscount;
+
+          // Lock input
           promoApplyBtn.textContent = 'Applied';
           promoApplyBtn.disabled = true;
           promoCodeInput.disabled = true;
-          promoMsg.className = 'checkout-promo-msg success';
-          var savingsText = discountAmount > 0
-            ? 'Code "' + code + '" applied! You save $' + discountAmount.toFixed(2) + '.'
-            : 'Code "' + code + '" applied! Discount will show at payment.';
-          promoMsg.textContent = savingsText;
-          promoToggle.textContent = '✓ Promo code applied';
-        }
+          promoToggle.textContent = '✓ ' + pct + '% off applied';
 
-        if (typeof Ecwid !== 'undefined' && Ecwid.Cart && typeof Ecwid.Cart.setCouponCode === 'function') {
-          Ecwid.Cart.setCouponCode(code, function(result) {
-            promoApplyBtn.textContent = 'Apply';
-            promoApplyBtn.disabled = false;
-            if (result && result.status === 'APPLIED') {
-              appliedCoupon = code;
-              // Fetch the updated cart to get the actual discount amount
-              if (typeof Ecwid.Cart.get === 'function') {
-                Ecwid.Cart.get(function(ecwidCart) {
-                  var discount = (ecwidCart && ecwidCart.couponDiscount) ? ecwidCart.couponDiscount : 0;
-                  showApplied(discount);
-                });
-              } else {
-                showApplied(0);
-              }
-            } else {
-              appliedCoupon = null;
-              promoMsg.className = 'checkout-promo-msg error';
-              promoMsg.textContent = 'Invalid or expired code. Please try again.';
-            }
-          });
-        } else {
-          // Ecwid not ready yet — wait for it then apply
-          appliedCoupon = code;
-          promoApplyBtn.textContent = 'Apply';
-          promoApplyBtn.disabled = false;
+          // Show success message
           promoMsg.className = 'checkout-promo-msg success';
-          promoMsg.textContent = 'Code "' + code + '" saved. Discount will show at payment.';
-          promoToggle.textContent = '✓ Promo code saved';
+          promoMsg.textContent = pct + '% off applied — you save $' + saving.toFixed(2) + '!';
+
+          // Re-render totals with discount
+          renderTotals(appliedDiscount);
+        } else {
+          appliedDiscount = 0;
+          appliedCode = null;
+          promoMsg.className = 'checkout-promo-msg error';
+          promoMsg.textContent = 'Invalid or expired code. Please try again.';
         }
       });
     }
 
-    // Place order button -> apply coupon if set, then go to Ecwid checkout
+    // Place order -> pass code as order comment to Ecwid, then checkout
     orderBtn.addEventListener('click', function(e) {
       e.preventDefault();
       orderBtn.disabled = true;
@@ -404,9 +407,13 @@
         }
       }
 
-      // If a coupon was entered but not yet confirmed via API, apply it now
-      if (appliedCoupon && typeof Ecwid !== 'undefined' && Ecwid.Cart && typeof Ecwid.Cart.setCouponCode === 'function') {
-        Ecwid.Cart.setCouponCode(appliedCoupon, function() { proceed(); });
+      if (appliedCode && typeof Ecwid !== 'undefined' && Ecwid.Cart) {
+        var comment = 'Promo code: ' + appliedCode + ' (' + Math.round(appliedDiscount * 100) + '% off)';
+        if (typeof Ecwid.Cart.setOrderComments === 'function') {
+          Ecwid.Cart.setOrderComments(comment, proceed);
+        } else {
+          proceed();
+        }
       } else {
         proceed();
       }
