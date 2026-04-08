@@ -317,10 +317,7 @@
       orderBtn.textContent = 'Redirecting to payment...';
 
       if (typeof Ecwid !== 'undefined') {
-        Ecwid.Cart.gotoCheckout(function() {
-          // Clear the PepLab local cart after successful redirect
-          cart.clearCart();
-        });
+        Ecwid.Cart.gotoCheckout();
       }
     });
   })();
