@@ -816,29 +816,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .pdp-upgrade-btn:hover { background: #fffbeb; border-color: #d97706; }
 
-/* Upsell banner (cart drawer + checkout) */
-.upsell-banner {
-  background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #f59e0b;
-  border-radius: 8px; padding: 16px; margin: 12px 0;
-}
-.upsell-banner-label {
-  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.5px; color: #92400e; margin-bottom: 6px;
-}
-.upsell-banner-title {
-  font-size: 0.95rem; font-weight: 800; color: #1a1a1a; margin-bottom: 4px;
-}
-.upsell-banner-price {
-  font-size: 0.8rem; color: #666; margin-bottom: 10px;
-}
-.upsell-banner-price strong { color: #92400e; }
-.upsell-banner-btn {
-  width: 100%; padding: 10px; background: #f59e0b; color: #000;
-  border: none; border-radius: 6px; font-family: var(--font);
-  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.5px; cursor: pointer; transition: background 0.2s;
-}
-.upsell-banner-btn:hover { background: #d97706; }
 
 /* ===== SPLIT LAYOUT ===== */
 .split-layout {

@@ -32,11 +32,7 @@
   }
 
   function removeFromCart(id) {
-    let cart = getCart().filter(item => item.id !== id);
-    // If 3-pack is removed, also remove the 7-pack upgrade (upgrade requires the 3-pack)
-    if (id === 'glp3rt-3pack') {
-      cart = cart.filter(item => item.id !== 'glp3rt-7pack');
-    }
+    const cart = getCart().filter(item => item.id !== id);
     saveCart(cart);
   }
 
@@ -98,9 +94,7 @@
     'NAD+ 500mg':                     { image: 'assets/products/nad-500mg.webp',              link: 'product-nad.html' },
     'Retatrutide (GLP-3 RT) 10mg':    { image: 'assets/products/glp3rt.webp',                 link: 'product-glp3rt.html' },
     'Retatrutide (GLP-3 RT) 10mg — 1 Vial':  { image: 'assets/products/glp3rt.webp',  link: 'product-glp3rt.html' },
-    'Retatrutide (GLP-3 RT) 10mg — 3 Vials': { image: 'assets/products/GLP-3 RT B1GOF.png', link: 'product-glp3rt.html' },
-    'Retatrutide (GLP-3 RT) 10mg — 7 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
-    'Retatrutide (GLP-3 RT) 10mg — 7 Vials (Upgrade)': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
+    'Retatrutide (GLP-3 RT) 10mg — 3 Vials': { image: 'assets/products/glp3rt.webp', link: 'product-glp3rt.html' },
     'Selank 5mg':                     { image: 'assets/products/selank-5mg.webp',             link: 'product-selank.html' },
     'Semax 5mg':                      { image: 'assets/products/semax-5mg.webp',              link: 'product-semax.html' },
     'Sermorelin 5mg':                 { image: 'assets/products/sermorelin-5mg.webp',         link: 'product-sermorelin.html' },
@@ -229,22 +223,7 @@
     const subtotal = getCartTotal();
     const freeShipping = subtotal >= 250;
 
-    // Check for upsell opportunity: 3-pack in cart but no 7-pack
-    var has3Pack = cart.some(function(i) { return i.id === 'glp3rt-3pack'; });
-    var has7Pack = cart.some(function(i) { return i.id === 'glp3rt-7pack'; });
-    var upsellHtml = '';
-    if (has3Pack && !has7Pack) {
-      upsellHtml = `
-        <div class="upsell-banner">
-          <div class="upsell-banner-label">Limited Time: GLP-3 RT Upgrade</div>
-          <div class="upsell-banner-title">Add 7 More GLP-3 RT Vials For The Price Of 2!</div>
-          <div class="upsell-banner-price">+7 Vials of GLP-3 RT (10mg) · <strong>$399.99</strong> ($57/vial)</div>
-          <button class="upsell-banner-btn" id="cartUpsellBtn">Add Upgrade to Cart</button>
-        </div>
-      `;
-    }
-
-    footer.innerHTML = upsellHtml + `
+    footer.innerHTML = `
       <div class="cart-shipping-notice ${freeShipping ? 'cart-shipping-free' : ''}">
         ${freeShipping
           ? '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg> Free shipping unlocked!'
@@ -258,23 +237,6 @@
       <a href="checkout.html" class="cart-checkout-btn">Proceed to Checkout</a>
       <button class="cart-continue-btn" id="cartContinue">Continue Shopping</button>
     `;
-
-    // Wire upsell button
-    var upsellBtn = document.getElementById('cartUpsellBtn');
-    if (upsellBtn) {
-      upsellBtn.addEventListener('click', function() {
-        addToCart({
-          id: 'glp3rt-7pack',
-          name: 'Retatrutide (GLP-3 RT) 10mg — 7 Vials (Upgrade)',
-          price: 399.99,
-          image: 'assets/products/glp3rt.webp',
-          link: 'product-glp3rt.html',
-          quantity: 1,
-          isOffer: true,
-          offerType: 'upgrade'
-        });
-      });
-    }
 
     // Wire up drawer event listeners
     body.querySelectorAll('.cart-item-qty-btn').forEach(btn => {
