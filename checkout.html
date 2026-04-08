@@ -330,9 +330,10 @@
 
     if (promoToggle) {
       promoToggle.addEventListener('click', function() {
-        var visible = promoInputRow.style.display !== 'none';
-        promoInputRow.style.display = visible ? 'none' : 'flex';
-        if (!visible) promoCodeInput.focus();
+        var hidden = promoInputRow.style.display === 'none';
+        promoInputRow.style.display = hidden ? 'flex' : 'none';
+        promoToggle.textContent = hidden ? '− Cancel' : '+ Have a promo code?';
+        if (hidden) promoCodeInput.focus();
       });
     }
 

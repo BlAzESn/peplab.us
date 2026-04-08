@@ -197,56 +197,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   }, { passive: true });
 })();
 
-// Promo code (checkout page)
-(function() {
-  const toggle = document.getElementById('promoToggle');
-  const inputRow = document.getElementById('promoInputRow');
-  const applyBtn = document.getElementById('promoApplyBtn');
-  const codeInput = document.getElementById('promoCodeInput');
-  const msg = document.getElementById('promoMsg');
-  if (!toggle) return;
-
-  // Valid codes: { CODE: discountFraction }
-  var CODES = { 'PEPLAB10': 0.10, 'RESEARCH15': 0.15 };
-  var appliedDiscount = 0;
-
-  toggle.addEventListener('click', function() {
-    var hidden = inputRow.style.display === 'none';
-    inputRow.style.display = hidden ? 'flex' : 'none';
-    toggle.textContent = hidden ? '− Cancel' : '+ Have a promo code?';
-  });
-
-  applyBtn.addEventListener('click', function() {
-    var code = codeInput.value.trim().toUpperCase();
-    msg.className = 'checkout-promo-msg';
-    if (CODES[code]) {
-      appliedDiscount = CODES[code];
-      msg.textContent = '✓ Code applied — ' + (appliedDiscount * 100) + '% off';
-      msg.classList.add('success');
-      codeInput.disabled = true;
-      applyBtn.disabled = true;
-      applyBtn.textContent = 'Applied';
-      // Re-render totals with discount
-      var totalsEl = document.getElementById('checkoutTotals');
-      if (totalsEl && window.PepLabCart) {
-        var subtotal = window.PepLabCart.getCartTotal();
-        var discount = subtotal * appliedDiscount;
-        var discounted = subtotal - discount;
-        var freeShipping = discounted >= 250;
-        var shipping = freeShipping ? 0 : 12.99;
-        var total = discounted + shipping;
-        totalsEl.innerHTML =
-          '<div class="checkout-summary-row"><span>Subtotal</span><span>$' + subtotal.toFixed(2) + '</span></div>' +
-          '<div class="checkout-summary-row"><span>Discount (' + (appliedDiscount * 100) + '%)</span><span style="color:#16a34a;">−$' + discount.toFixed(2) + '</span></div>' +
-          '<div class="checkout-summary-row"><span>Shipping</span><span' + (freeShipping ? ' class="free"' : '') + '>' + (freeShipping ? 'FREE' : '$' + shipping.toFixed(2)) + '</span></div>' +
-          '<div class="checkout-summary-row total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
-      }
-    } else {
-      msg.textContent = 'Invalid promo code.';
-      msg.classList.add('error');
-    }
-  });
-})();
 
 // ===== SCROLL REVEAL =====
 (function() {
