@@ -347,15 +347,33 @@
         promoMsg.className = 'checkout-promo-msg';
         promoMsg.textContent = '';
 
+        function showApplied(discountAmount) {
+          promoApplyBtn.textContent = 'Applied';
+          promoApplyBtn.disabled = true;
+          promoCodeInput.disabled = true;
+          promoMsg.className = 'checkout-promo-msg success';
+          var savingsText = discountAmount > 0
+            ? 'Code "' + code + '" applied! You save $' + discountAmount.toFixed(2) + '.'
+            : 'Code "' + code + '" applied! Discount will show at payment.';
+          promoMsg.textContent = savingsText;
+          promoToggle.textContent = '✓ Promo code applied';
+        }
+
         if (typeof Ecwid !== 'undefined' && Ecwid.Cart && typeof Ecwid.Cart.setCouponCode === 'function') {
           Ecwid.Cart.setCouponCode(code, function(result) {
             promoApplyBtn.textContent = 'Apply';
             promoApplyBtn.disabled = false;
             if (result && result.status === 'APPLIED') {
               appliedCoupon = code;
-              promoMsg.className = 'checkout-promo-msg success';
-              promoMsg.textContent = 'Code "' + code + '" applied!';
-              promoToggle.textContent = 'Promo code applied: ' + code;
+              // Fetch the updated cart to get the actual discount amount
+              if (typeof Ecwid.Cart.get === 'function') {
+                Ecwid.Cart.get(function(ecwidCart) {
+                  var discount = (ecwidCart && ecwidCart.couponDiscount) ? ecwidCart.couponDiscount : 0;
+                  showApplied(discount);
+                });
+              } else {
+                showApplied(0);
+              }
             } else {
               appliedCoupon = null;
               promoMsg.className = 'checkout-promo-msg error';
@@ -363,13 +381,13 @@
             }
           });
         } else {
-          // Ecwid not ready — store it and apply at checkout time
+          // Ecwid not ready yet — wait for it then apply
           appliedCoupon = code;
           promoApplyBtn.textContent = 'Apply';
           promoApplyBtn.disabled = false;
           promoMsg.className = 'checkout-promo-msg success';
-          promoMsg.textContent = 'Code "' + code + '" will be applied at checkout.';
-          promoToggle.textContent = 'Promo code saved: ' + code;
+          promoMsg.textContent = 'Code "' + code + '" saved. Discount will show at payment.';
+          promoToggle.textContent = '✓ Promo code saved';
         }
       });
     }
