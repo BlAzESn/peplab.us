@@ -79,7 +79,7 @@
     '5-Amino-1MQ 50mg':              { image: 'assets/products/5amino1mq-50mg.webp',         link: 'product-5amino.html' },
     'AOD-9604 5mg':                   { image: 'assets/products/aod9604-5mg.webp',            link: 'product-aod9604.html' },
     'Bacteriostatic Water':           { image: 'assets/products/bacteriostatic-water.webp',   link: 'product-bacwater.html' },
-    'Bacteriostatic Water 30mL':      { image: 'assets/products/bacteriostatic-water.webp',   link: 'product-bacwater.html' },
+    'Bacteriostatic Water 10mL':      { image: 'assets/products/bacteriostatic-water.webp',   link: 'product-bacwater.html' },
     'BPC-157 5mg':                    { image: 'assets/products/bpc157-5mg.webp',             link: 'product-bpc157.html' },
     'BPC-157 10mg':                   { image: 'assets/products/bpc157-10mg.webp',            link: 'product-bpc157-10mg.html' },
     'CJC-1295 + Ipamorelin 5mg/5mg': { image: 'assets/products/cjc1295-ipamorelin-blend.webp', link: 'product-cjc-ipa-blend.html' },
