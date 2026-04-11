@@ -356,7 +356,7 @@
       var email = document.getElementById('paymentEmail').value;
       btn.disabled = true;
       btn.textContent = 'Sending...';
-      fetch('https://formspree.io/f/FORMSPREE_ID', {
+      fetch('https://formspree.io/f/xykbrnyk', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, source: 'payment-waitlist' })
