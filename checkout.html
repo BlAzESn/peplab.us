@@ -57,23 +57,23 @@
 
   <header class="site-header" id="header">
     <div class="header-inner">
-      <a href="index.html" class="logo"><img src="assets/logo-icon.webp" alt="PepLab"></a>
+      <a href="/" class="logo"><img src="assets/logo-icon.webp" alt="PepLab"></a>
       <nav class="nav-links" id="nav">
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="about.html">About</a>
-        <a href="faq.html">FAQ</a>
-        <a href="test-results.html">Test Results</a>
-        <a href="research-guide.html">Research Guide</a>
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/about">About</a>
+        <a href="/faq">FAQ</a>
+        <a href="/test-results">Test Results</a>
+        <a href="/research-guide">Research Guide</a>
       </nav>
-      <div class="header-actions"><a href="shop.html" class="nav-cta">Shop Now</a></div>
+      <div class="header-actions"><a href="/shop" class="nav-cta">Shop Now</a></div>
       <button class="mobile-toggle" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <section class="checkout-page">
     <div class="container">
-      <a href="shop.html" class="pdp-back">&larr; Back to Shop</a>
+      <a href="/shop" class="pdp-back">&larr; Back to Shop</a>
 
       <!-- Hidden Ecwid anchor - needed for JS API init only, not visible -->
       <div id="my-checkout-134007760" style="display:none;"></div>
@@ -112,24 +112,24 @@
         </div>
         <div class="footer-col">
           <h4>Shop</h4>
-          <a href="shop.html">All Products</a>
-          <a href="shop.html#recovery">Regenerative Peptides</a>
-          <a href="shop.html#metabolic">Metabolic Peptides</a>
-          <a href="shop.html#growth">Growth Hormone Peptides</a>
+          <a href="/shop">All Products</a>
+          <a href="/shop#recovery">Regenerative Peptides</a>
+          <a href="/shop#metabolic">Metabolic Peptides</a>
+          <a href="/shop#growth">Growth Hormone Peptides</a>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
-          <a href="about.html">About Us</a>
-          <a href="test-results.html">Test Results</a>
-          <a href="research-guide.html">Research Guide</a>
-          <a href="faq.html">FAQ</a>
+          <a href="/about">About Us</a>
+          <a href="/test-results">Test Results</a>
+          <a href="/research-guide">Research Guide</a>
+          <a href="/faq">FAQ</a>
         </div>
         <div class="footer-col">
           <h4>Policies</h4>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="shipping.html">Shipping Policy</a>
-          <a href="refund.html">Refund Policy</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/shipping">Shipping Policy</a>
+          <a href="/refund">Refund Policy</a>
         </div>
       </div>
       <div class="footer-fda"><p class="footer-fda-title">Research Use Disclaimer</p><p>All products currently listed on this site are for research purposes ONLY. All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injections, or ingestion. Peptides are strictly for laboratory, academic, or institutional research and not for human or animal consumption.</p></div><div class="footer-bottom">
@@ -158,7 +158,7 @@
         <div class="payment-down-check">✓</div>
         <p>You're on the list! We'll email you as soon as checkout is back online.</p>
       </div>
-      <a href="shop.html" class="payment-down-back">← Continue Browsing</a>
+      <a href="/shop" class="payment-down-back">← Continue Browsing</a>
     </div>
   </div>
 
@@ -250,7 +250,7 @@
 
     // Redirect if cart empty
     if (items.length === 0) {
-      itemsEl.innerHTML = '<p style="font-size:0.9rem;color:var(--text-muted);padding:20px 0;">Your cart is empty. <a href="shop.html" style="color:var(--accent);font-weight:600;">Browse products</a></p>';
+      itemsEl.innerHTML = '<p style="font-size:0.9rem;color:var(--text-muted);padding:20px 0;">Your cart is empty. <a href="/shop" style="color:var(--accent);font-weight:600;">Browse products</a></p>';
       totalsEl.innerHTML = '';
       if (loadingEl) loadingEl.innerHTML = '<p style="color:var(--text-muted);">Add items to your cart before checking out.</p>';
       return;
