@@ -148,7 +148,7 @@
       <h2 class="payment-down-title">Payment System Upgrade in Progress</h2>
       <p class="payment-down-desc">We're switching to a new payment processor to serve you better. Orders are temporarily on hold.</p>
       <p class="payment-down-sub">Enter your email and we'll notify you the moment checkout is back online — your cart will be ready to go.</p>
-      <form name="payment-waitlist" method="POST" netlify class="payment-down-form" id="paymentDownForm">
+      <form name="payment-waitlist" method="POST" data-netlify="true" class="payment-down-form" id="paymentDownForm">
         <input type="hidden" name="form-name" value="payment-waitlist">
         <div class="payment-down-field">
           <input type="email" name="email" id="paymentEmail" placeholder="your@email.com" required class="payment-down-email">
@@ -354,7 +354,7 @@
     document.getElementById('paymentDownForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var email = document.getElementById('paymentEmail').value;
-      fetch('/', {
+      fetch('/checkout.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ 'form-name': 'payment-waitlist', 'email': email }).toString()
