@@ -269,11 +269,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     var input = form.querySelector('.newsletter-input');
     var btn = form.querySelector('.newsletter-btn');
     if (!input || !input.value.includes('@')) { input && input.focus(); return; }
-    btn.textContent = 'Subscribed!';
-    btn.style.background = '#16a34a';
-    input.value = '';
-    input.disabled = true;
+    var email = input.value.trim();
+    btn.textContent = 'Sending...';
     btn.disabled = true;
+    fetch('https://formspree.io/f/xvzvewov', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'newsletter' })
+    }).then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.ok) {
+          btn.textContent = 'Subscribed!';
+          btn.style.background = '#16a34a';
+          input.value = '';
+          input.disabled = true;
+        } else {
+          btn.textContent = 'Try Again';
+          btn.disabled = false;
+        }
+      })
+      .catch(function() {
+        btn.textContent = 'Try Again';
+        btn.disabled = false;
+      });
   });
 })();
 
