@@ -139,6 +139,30 @@
     </div>
   </footer>
 
+  <!-- PAYMENT DOWN OVERLAY -->
+  <div class="payment-down-overlay" id="paymentDownOverlay">
+    <div class="payment-down-modal">
+      <div class="payment-down-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l5.654-4.654m5.96-4.643.025-.022a3.976 3.976 0 0 0-.35-5.632 3.976 3.976 0 0 0-5.632-.35l-.022.025"/></svg>
+      </div>
+      <h2 class="payment-down-title">Payment System Upgrade in Progress</h2>
+      <p class="payment-down-desc">We're switching to a new payment processor to serve you better. Orders are temporarily on hold.</p>
+      <p class="payment-down-sub">Enter your email and we'll notify you the moment checkout is back online — your cart will be ready to go.</p>
+      <form name="payment-waitlist" method="POST" netlify class="payment-down-form" id="paymentDownForm">
+        <input type="hidden" name="form-name" value="payment-waitlist">
+        <div class="payment-down-field">
+          <input type="email" name="email" id="paymentEmail" placeholder="your@email.com" required class="payment-down-email">
+          <button type="submit" class="payment-down-btn">Notify Me</button>
+        </div>
+      </form>
+      <div class="payment-down-success" id="paymentDownSuccess">
+        <div class="payment-down-check">✓</div>
+        <p>You're on the list! We'll email you as soon as checkout is back online.</p>
+      </div>
+      <a href="shop.html" class="payment-down-back">← Continue Browsing</a>
+    </div>
+  </div>
+
   <script src="main.js"></script>
   <script src="cart.js"></script>
   <script>
@@ -320,14 +344,24 @@
 
     syncCartToEcwid();
 
-    // Place order -> go to Ecwid checkout
+    // Place order -> show payment-down modal (payment processor upgrade in progress)
     orderBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      orderBtn.disabled = true;
-      orderBtn.textContent = 'Redirecting to payment...';
-      if (typeof Ecwid !== 'undefined') {
-        Ecwid.Cart.gotoCheckout();
-      }
+      document.getElementById('paymentDownOverlay').classList.add('active');
+    });
+
+    // Handle email waitlist form submission via Netlify Forms
+    document.getElementById('paymentDownForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = document.getElementById('paymentEmail').value;
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ 'form-name': 'payment-waitlist', 'email': email }).toString()
+      }).finally(function() {
+        document.getElementById('paymentDownForm').style.display = 'none';
+        document.getElementById('paymentDownSuccess').style.display = 'block';
+      });
     });
   })();
   </script>
