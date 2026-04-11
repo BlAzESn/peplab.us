@@ -353,14 +353,28 @@
     // Handle email waitlist form submission via Netlify Forms
     document.getElementById('paymentDownForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      var btn = this.querySelector('.payment-down-btn');
       var email = document.getElementById('paymentEmail').value;
-      fetch('/checkout.html', {
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      fetch(window.location.pathname, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ 'form-name': 'payment-waitlist', 'email': email }).toString()
-      }).finally(function() {
+      }).then(function(res) {
+        if (!res.ok) throw new Error('Network response not ok');
         document.getElementById('paymentDownForm').style.display = 'none';
         document.getElementById('paymentDownSuccess').style.display = 'block';
+      }).catch(function() {
+        // Fallback: try posting to root
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ 'form-name': 'payment-waitlist', 'email': email }).toString()
+        }).finally(function() {
+          document.getElementById('paymentDownForm').style.display = 'none';
+          document.getElementById('paymentDownSuccess').style.display = 'block';
+        });
       });
     });
   })();
