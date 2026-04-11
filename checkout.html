@@ -350,31 +350,24 @@
       document.getElementById('paymentDownOverlay').classList.add('active');
     });
 
-    // Handle email waitlist form submission via Netlify Forms
+    // Handle email waitlist form submission via Netlify Forms (per Netlify docs)
     document.getElementById('paymentDownForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var btn = this.querySelector('.payment-down-btn');
-      var email = document.getElementById('paymentEmail').value;
       btn.disabled = true;
       btn.textContent = 'Sending...';
-      fetch(window.location.pathname, {
+      var formData = new FormData(this);
+      fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ 'form-name': 'payment-waitlist', 'email': email }).toString()
-      }).then(function(res) {
-        if (!res.ok) throw new Error('Network response not ok');
+        body: new URLSearchParams(formData).toString()
+      }).then(function() {
         document.getElementById('paymentDownForm').style.display = 'none';
         document.getElementById('paymentDownSuccess').style.display = 'block';
-      }).catch(function() {
-        // Fallback: try posting to root
-        fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ 'form-name': 'payment-waitlist', 'email': email }).toString()
-        }).finally(function() {
-          document.getElementById('paymentDownForm').style.display = 'none';
-          document.getElementById('paymentDownSuccess').style.display = 'block';
-        });
+      }).catch(function(error) {
+        btn.disabled = false;
+        btn.textContent = 'Notify Me';
+        console.error('Form submission error:', error);
       });
     });
   })();
