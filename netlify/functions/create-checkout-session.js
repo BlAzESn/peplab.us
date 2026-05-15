@@ -170,6 +170,10 @@ exports.handler = async (event) => {
     items: psifiItems,
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/cancel`,
+    // Force merchant (us) to absorb processing fees so the customer
+    // pays exactly the amount shown in the order summary. Mirrors the
+    // dashboard's "Merchant Pays Fees" toggle but applied per session.
+    fee_payer: 'merchant',
     metadata: {
       source: 'peplab.us',
       cart_subtotal: subtotal.toFixed(2),
@@ -200,11 +204,16 @@ exports.handler = async (event) => {
 
   if (!psifiRes.ok) {
     console.error('PsiFi error response:', psifiRes.status, psifiData);
+    console.error('Request body that was rejected:', JSON.stringify(psifiBody));
     return json(502, {
       error: 'Payment provider rejected the request',
       detail: psifiData,
     });
   }
+
+  // Log the full successful response so we can verify which fields PsiFi
+  // accepted (fee_payer, payment methods, etc.) for the session.
+  console.log('PsiFi session created:', JSON.stringify(psifiData));
 
   const checkoutUrl =
     psifiData.checkout_url ||
