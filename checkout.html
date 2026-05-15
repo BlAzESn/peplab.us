@@ -10,6 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
+    /* ---- Parent layout fix ----
+       .checkout-layout--single in styles.css is "display: flex;
+       justify-content: center;" with no flex-direction, which laid the
+       shipping box and order summary as side-by-side columns. Force
+       vertical stacking so the shipping form sits ABOVE the summary. */
+    .checkout-layout.checkout-layout--single {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 20px;
+    }
+    .checkout-layout.checkout-layout--single > .checkout-summary {
+      width: 100% !important;
+      max-width: 480px !important;
+    }
+
     /* ---- Shipping form (single column, all screens) ---- */
     /* Using flex column with !important on the column rule so no
        inherited grid/flex from a parent can ever make this 50/50. */
