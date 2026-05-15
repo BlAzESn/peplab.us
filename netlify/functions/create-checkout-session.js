@@ -1,63 +1,70 @@
 // PepLab.us → PsiFi checkout session creator
 //
-// Receives a cart from the browser, validates it against a server-side
-// price catalog (so customers cannot tamper with prices in DevTools),
-// builds the order, and asks PsiFi for a hosted checkout URL.
+// Receives a cart from the browser, validates names against the
+// server-side allowlist, looks up the corresponding PsiFi productId,
+// and creates a PsiFi hosted checkout session.
 //
-// The browser never sees the PsiFi API key — it lives only in
+// PsiFi's API fetches name and price from its own product database
+// (created via the seed script). All we send is { productId, quantity }.
+//
+// The PsiFi API key never reaches the browser — it lives only in
 // the PSIFI_API_KEY env var on Netlify.
 
 const crypto = require('crypto');
 
-// ─── Server-side price catalog ──────────────────────────────────────
-// Canonical product names → unit price in USD. Names must match what
-// shop.html / cart.js / product pages use. If a cart item's name isn't
-// here we reject the request rather than pass through an unknown price.
+// ─── Server-side catalog: name → { psifiId, price } ────────────────
+// Prices here are display/audit only (PsiFi uses its own DB price).
+// The map serves three purposes:
+//   1. Allowlist — reject unknown product names
+//   2. Compute subtotal for the free-shipping threshold
+//   3. Audit trail in PsiFi session metadata
 const CATALOG = {
-  'GLP-3 (RT) 10mg':              79.99,
-  'GLP-3 (RT) 10mg — 1 Vial':     79.99,
-  'GLP-3 (RT) 10mg — 3 Vials':   199.99,
-  'BPC-157 5mg':                  42.99,
-  'BPC-157 10mg':                 72.99,
-  'TB-500 5mg':                   44.99,
-  'SS-31 5mg':                    54.99,
-  'Wolverine Blend':              79.99,
-  'Tirzepatide 10mg':             89.99,
-  'AOD-9604 5mg':                 38.99,
-  '5-Amino-1MQ 50mg':             49.99,
-  'MOTS-c 10mg':                  59.99,
-  'L-Carnitine 500mg':            29.99,
-  'Klow Blend 80mg':              99.99,
-  'Ipamorelin 10mg':              39.99,
-  'Sermorelin 5mg':               36.99,
-  'CJC-1295 No DAC 5mg':          39.99,
-  'CJC-1295 DAC 5mg':             44.99,
-  'CJC-1295 Ipamorelin Blend':    64.99,
-  'Tesamorelin 10mg':             69.99,
-  'IGF-1 LR3 1mg':                79.99,
-  'HCG 5000 IU':                  49.99,
-  'Kisspeptin 10mg':              54.99,
-  'Selank 5mg':                   34.99,
-  'Semax 5mg':                    36.99,
-  'DSIP 5mg':                     32.99,
-  'Epithalon 10mg':               44.99,
-  'NAD+ 500mg':                   64.99,
-  'GHK-Cu':                       39.99,
-  'Glow Blend 70mg':              84.99,
-  'MT-1 10mg':                    39.99,
-  'MT-2 10mg':                    34.99,
-  'Bacteriostatic Water':         14.99,
-  'Bacteriostatic Water 10mL':    14.99,
+  'GLP-3 (RT) 10mg':              { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000002', price: 79.99 },
+  'GLP-3 (RT) 10mg — 1 Vial':     { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000003', price: 79.99 },
+  'GLP-3 (RT) 10mg — 3 Vials':    { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000004', price: 199.99 },
+  'BPC-157 5mg':                  { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000005', price: 42.99 },
+  'BPC-157 10mg':                 { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000006', price: 72.99 },
+  'TB-500 5mg':                   { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000007', price: 44.99 },
+  'SS-31 5mg':                    { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000008', price: 54.99 },
+  'Wolverine Blend':              { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000009', price: 79.99 },
+  'Tirzepatide 10mg':             { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000010', price: 89.99 },
+  'AOD-9604 5mg':                 { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000011', price: 38.99 },
+  '5-Amino-1MQ 50mg':             { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000012', price: 49.99 },
+  'MOTS-c 10mg':                  { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000013', price: 59.99 },
+  'L-Carnitine 500mg':            { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000014', price: 29.99 },
+  'Klow Blend 80mg':              { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000015', price: 99.99 },
+  'Ipamorelin 10mg':              { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000016', price: 39.99 },
+  'Sermorelin 5mg':               { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000017', price: 36.99 },
+  'CJC-1295 No DAC 5mg':          { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000018', price: 39.99 },
+  'CJC-1295 DAC 5mg':             { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000019', price: 44.99 },
+  'CJC-1295 Ipamorelin Blend':    { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000020', price: 64.99 },
+  'Tesamorelin 10mg':             { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000021', price: 69.99 },
+  'IGF-1 LR3 1mg':                { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000022', price: 79.99 },
+  'HCG 5000 IU':                  { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000023', price: 49.99 },
+  'Kisspeptin 10mg':              { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000024', price: 54.99 },
+  'Selank 5mg':                   { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000025', price: 34.99 },
+  'Semax 5mg':                    { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000026', price: 36.99 },
+  'DSIP 5mg':                     { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000027', price: 32.99 },
+  'Epithalon 10mg':               { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000028', price: 44.99 },
+  'NAD+ 500mg':                   { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000029', price: 64.99 },
+  'GHK-Cu':                       { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000030', price: 39.99 },
+  'Glow Blend 70mg':              { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000031', price: 84.99 },
+  'MT-1 10mg':                    { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000032', price: 39.99 },
+  'MT-2 10mg':                    { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000033', price: 34.99 },
+  'Bacteriostatic Water':         { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000034', price: 14.99 },
+  'Bacteriostatic Water 10mL':    { psifiId: 'PSIFI-6a06496c8353e17a770e8014-000034', price: 14.99 },
 };
 
-// Aliases for legacy / alternate names a cart might still send.
-// Resolves to the canonical key in CATALOG.
+const SHIPPING_PSIFI_ID = 'PSIFI-6a06496c8353e17a770e8014-000035';
+const FREE_SHIPPING_THRESHOLD = 250;
+const FLAT_SHIPPING_RATE = 19.99;
+
+// Aliases — legacy names from earlier versions of the cart.
+// Resolves to a canonical key in CATALOG.
 const ALIASES = {
-  // Legacy "Retatrutide" names — for carts saved before the GLP-3 rename
   'Retatrutide (GLP-3 RT) 10mg':                'GLP-3 (RT) 10mg',
   'Retatrutide (GLP-3 RT) 10mg — 1 Vial':       'GLP-3 (RT) 10mg — 1 Vial',
   'Retatrutide (GLP-3 RT) 10mg — 3 Vials':      'GLP-3 (RT) 10mg — 3 Vials',
-  // Product page heading variants
   'Wolverine Blend (BPC-157 + TB-500)':         'Wolverine Blend',
   'Wolverine (BPC157/TB500 Blend)':             'Wolverine Blend',
   'KLOW Blend (80mg)':                           'Klow Blend 80mg',
@@ -68,14 +75,10 @@ const ALIASES = {
   'Bacteriostatic Water (10mL)':                'Bacteriostatic Water',
 };
 
-// Shipping rule mirrors the site UI: free over $250, otherwise $19.99
-const FREE_SHIPPING_THRESHOLD = 250;
-const FLAT_SHIPPING_RATE = 19.99;
-
 function resolveCatalogKey(name) {
-  if (CATALOG[name] != null) return name;
+  if (CATALOG[name]) return name;
   const alias = ALIASES[name];
-  if (alias && CATALOG[alias] != null) return alias;
+  if (alias && CATALOG[alias]) return alias;
   return null;
 }
 
@@ -88,23 +91,20 @@ function json(statusCode, body) {
 }
 
 exports.handler = async (event) => {
-  // Method check
   if (event.httpMethod !== 'POST') {
     return json(405, { error: 'Method not allowed' });
   }
 
-  // Auth env check
   const apiKey = process.env.PSIFI_API_KEY;
   if (!apiKey) {
     console.error('PSIFI_API_KEY env var missing');
     return json(500, { error: 'Server misconfigured' });
   }
 
-  // Parse body
   let payload;
   try {
     payload = JSON.parse(event.body || '{}');
-  } catch (e) {
+  } catch {
     return json(400, { error: 'Invalid JSON' });
   }
 
@@ -113,9 +113,9 @@ exports.handler = async (event) => {
     return json(400, { error: 'Cart is empty' });
   }
 
-  // Validate + re-price every item against the server-side catalog.
-  // We trust nothing the client sent except (name, quantity).
+  // Resolve every cart item against the catalog
   const psifiItems = [];
+  const auditItems = [];
   let subtotal = 0;
   for (const item of rawItems) {
     const name = typeof item.name === 'string' ? item.name.trim() : '';
@@ -132,12 +132,16 @@ exports.handler = async (event) => {
       return json(400, { error: `Unknown product: ${name}` });
     }
 
-    const price = CATALOG[canonical];
-    subtotal += price * qty;
+    const entry = CATALOG[canonical];
+    subtotal += entry.price * qty;
 
     psifiItems.push({
+      productId: entry.psifiId,
+      quantity: qty,
+    });
+    auditItems.push({
       name: canonical,
-      price,
+      price: entry.price,
       quantity: qty,
     });
   }
@@ -146,13 +150,12 @@ exports.handler = async (event) => {
   const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : FLAT_SHIPPING_RATE;
   if (shippingCost > 0) {
     psifiItems.push({
-      name: 'Shipping',
-      price: shippingCost,
+      productId: SHIPPING_PSIFI_ID,
       quantity: 1,
     });
   }
 
-  // Build origin for success/cancel URLs (works on netlify.app preview and peplab.us prod)
+  // Build origin for success/cancel URLs
   const origin =
     event.headers['origin'] ||
     `https://${event.headers['host'] || 'peplab.us'}`;
@@ -165,14 +168,13 @@ exports.handler = async (event) => {
       source: 'peplab.us',
       cart_subtotal: subtotal.toFixed(2),
       cart_shipping: shippingCost.toFixed(2),
+      cart_total: (subtotal + shippingCost).toFixed(2),
+      items_snapshot: JSON.stringify(auditItems),
     },
   };
 
-  // PsiFi requires an Idempotency-Key header to prevent duplicate orders
-  // on network retries. Fresh UUID per invocation.
   const idempotencyKey = crypto.randomUUID();
 
-  // Call PsiFi
   let psifiRes, psifiData;
   try {
     psifiRes = await fetch('https://api.psifi.app/api/v2/checkout-sessions', {
@@ -198,17 +200,20 @@ exports.handler = async (event) => {
     });
   }
 
-  // PsiFi response shape may vary — we accept several common field names
   const checkoutUrl =
     psifiData.checkout_url ||
     psifiData.url ||
     psifiData.checkoutUrl ||
     psifiData.session_url ||
+    psifiData.hosted_url ||
     null;
 
   if (!checkoutUrl) {
     console.error('PsiFi response missing checkout URL:', psifiData);
-    return json(502, { error: 'Payment provider returned no URL' });
+    return json(502, {
+      error: 'Payment provider returned no URL',
+      detail: psifiData,
+    });
   }
 
   return json(200, { checkout_url: checkoutUrl });
