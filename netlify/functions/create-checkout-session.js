@@ -171,9 +171,18 @@ exports.handler = async (event) => {
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/cancel`,
     // Force merchant (us) to absorb processing fees so the customer
-    // pays exactly the amount shown in the order summary. Mirrors the
-    // dashboard's "Merchant Pays Fees" toggle but applied per session.
+    // pays exactly the amount shown in the order summary.
     fee_payer: 'merchant',
+    // Force PsiFi's hosted checkout to collect the customer's shipping
+    // address (Stripe-style field — PsiFi mirrors this naming).
+    // Required to unlock Apple Pay / Google Pay for physical goods.
+    shipping_address_collection: {
+      allowed_countries: ['US'],
+    },
+    // Also try alternate field names PsiFi may use — they'll ignore
+    // any they don't recognize, accept the one they do.
+    collect_shipping_address: true,
+    collect_billing_address: true,
     metadata: {
       source: 'peplab.us',
       cart_subtotal: subtotal.toFixed(2),
