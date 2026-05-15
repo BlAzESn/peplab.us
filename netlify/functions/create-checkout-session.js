@@ -135,8 +135,12 @@ exports.handler = async (event) => {
     const entry = CATALOG[canonical];
     subtotal += entry.price * qty;
 
+    // PsiFi's API requires BOTH productId AND name/price on each item,
+    // despite their own error messages suggesting otherwise.
     psifiItems.push({
       productId: entry.psifiId,
+      name: canonical,
+      price: entry.price,
       quantity: qty,
     });
     auditItems.push({
@@ -151,6 +155,8 @@ exports.handler = async (event) => {
   if (shippingCost > 0) {
     psifiItems.push({
       productId: SHIPPING_PSIFI_ID,
+      name: 'Shipping',
+      price: FLAT_SHIPPING_RATE,
       quantity: 1,
     });
   }
