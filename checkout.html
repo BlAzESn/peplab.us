@@ -10,68 +10,70 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-    /* ---- Shipping form, scoped to the checkout page ---- */
-    .ship-form {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 18px;
+    /* ---- Shipping form (single column, all screens) ---- */
+    /* Using flex column with !important on the column rule so no
+       inherited grid/flex from a parent can ever make this 50/50. */
+    form.ship-form {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+      margin-top: 18px !important;
+      width: 100% !important;
     }
-    @media (min-width: 640px) {
-      .ship-form { grid-template-columns: 1fr 1fr; gap: 14px 16px; }
-      .ship-row-full { grid-column: 1 / -1; }
+    form.ship-form > label {
+      display: block !important;
+      width: 100% !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      color: var(--text-muted, #6b6b6b) !important;
+      letter-spacing: 0.04em !important;
+      text-transform: uppercase !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
-    .ship-form label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted, #6b6b6b);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+    form.ship-form > label .optional {
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      color: var(--text-muted, #999) !important;
+      font-weight: 400 !important;
+      margin-left: 4px !important;
     }
-    .ship-form label .optional {
-      text-transform: none;
-      letter-spacing: 0;
-      color: var(--text-muted, #999);
-      font-weight: 400;
-      margin-left: 4px;
-    }
-    .ship-form input,
-    .ship-form select {
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 6px;
-      padding: 14px 14px;
-      border: 1px solid var(--border, #d8d8d8);
-      border-radius: 8px;
-      font-family: inherit;
-      /* 16px prevents iOS Safari auto-zoom on focus */
-      font-size: 16px;
-      line-height: 1.3;
-      color: var(--text, #111);
-      background: #fff;
-      -webkit-appearance: none;
-      appearance: none;
+    form.ship-form input,
+    form.ship-form select {
+      display: block !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      margin-top: 8px !important;
+      padding: 14px 14px !important;
+      border: 1px solid var(--border, #d8d8d8) !important;
+      border-radius: 8px !important;
+      font-family: inherit !important;
+      font-size: 16px !important; /* 16px prevents iOS Safari zoom on focus */
+      line-height: 1.3 !important;
+      color: var(--text, #111) !important;
+      background: #fff !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .ship-form input:focus,
-    .ship-form select:focus {
-      outline: none;
-      border-color: var(--accent, #2557ff);
-      box-shadow: 0 0 0 3px rgba(37, 87, 255, 0.12);
+    form.ship-form input:focus,
+    form.ship-form select:focus {
+      outline: none !important;
+      border-color: var(--accent, #2557ff) !important;
+      box-shadow: 0 0 0 3px rgba(37, 87, 255, 0.12) !important;
     }
-    .ship-form input:disabled {
-      background: #f4f4f6;
-      color: var(--text-muted, #999);
-      cursor: not-allowed;
+    form.ship-form input:disabled {
+      background: #f4f4f6 !important;
+      color: var(--text-muted, #999) !important;
+      cursor: not-allowed !important;
     }
-    .ship-form select {
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='none' stroke='%23666' stroke-width='1.5' d='M1 1.5l5 5 5-5'/></svg>");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 38px;
+    form.ship-form select {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='none' stroke='%23666' stroke-width='1.5' d='M1 1.5l5 5 5-5'/></svg>") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 14px center !important;
+      padding-right: 40px !important;
     }
-    .ship-form input::placeholder { color: #b8b8b8; }
+    form.ship-form input::placeholder { color: #b8b8b8 !important; }
   </style>
   <script type="text/javascript">
       (function(c,l,a,r,i,t,y){
@@ -144,7 +146,7 @@
         <div class="checkout-summary" id="shippingFormBox" style="margin-bottom:20px;">
           <div class="checkout-summary-title">Shipping Information</div>
           <form id="shippingForm" class="ship-form" autocomplete="on" novalidate>
-            <label class="ship-row-full">Email
+            <label>Email
               <input required type="email" name="email" autocomplete="email" placeholder="you@example.com">
             </label>
 
@@ -155,18 +157,18 @@
               <input required type="text" name="lastName" autocomplete="family-name">
             </label>
 
-            <label class="ship-row-full">Phone
+            <label>Phone
               <input required type="tel" name="phone" autocomplete="tel" placeholder="(555) 555-5555">
             </label>
 
-            <label class="ship-row-full">Address line 1
+            <label>Address line 1
               <input required type="text" name="address1" autocomplete="address-line1" placeholder="Street address">
             </label>
-            <label class="ship-row-full">Address line 2 <span class="optional">(optional)</span>
+            <label>Address line 2 <span class="optional">(optional)</span>
               <input type="text" name="address2" autocomplete="address-line2" placeholder="Apt, suite, etc.">
             </label>
 
-            <label class="ship-row-full">City
+            <label>City
               <input required type="text" name="city" autocomplete="address-level2">
             </label>
 
@@ -179,7 +181,7 @@
               <input required type="text" name="zip" autocomplete="postal-code" inputmode="numeric" pattern="\d{5}(-?\d{4})?" placeholder="95348">
             </label>
 
-            <label class="ship-row-full">Country
+            <label>Country
               <input type="text" value="United States" disabled>
             </label>
           </form>
