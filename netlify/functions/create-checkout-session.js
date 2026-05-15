@@ -7,6 +7,8 @@
 // The browser never sees the PsiFi API key — it lives only in
 // the PSIFI_API_KEY env var on Netlify.
 
+const crypto = require('crypto');
+
 // ─── Server-side price catalog ──────────────────────────────────────
 // Canonical product names → unit price in USD. Names must match what
 // shop.html / cart.js / product pages use. If a cart item's name isn't
@@ -166,6 +168,10 @@ exports.handler = async (event) => {
     },
   };
 
+  // PsiFi requires an Idempotency-Key header to prevent duplicate orders
+  // on network retries. Fresh UUID per invocation.
+  const idempotencyKey = crypto.randomUUID();
+
   // Call PsiFi
   let psifiRes, psifiData;
   try {
@@ -173,6 +179,7 @@ exports.handler = async (event) => {
       method: 'POST',
       headers: {
         'x-api-key': apiKey,
+        'Idempotency-Key': idempotencyKey,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(psifiBody),
