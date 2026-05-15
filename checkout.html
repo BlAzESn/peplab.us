@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script type="text/javascript" src="https://app.ecwid.com/script.js?134007760&data_platform=code" charset="utf-8"></script>
   <script type="text/javascript">
       (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -75,9 +74,6 @@
     <div class="container">
       <a href="/shop" class="pdp-back">&larr; Back to Shop</a>
 
-      <!-- Hidden Ecwid anchor - needed for JS API init only, not visible -->
-      <div id="my-checkout-134007760" style="display:none;"></div>
-
       <div class="checkout-layout checkout-layout--single">
         <!-- ORDER SUMMARY -->
         <div class="checkout-summary" id="checkoutSummary">
@@ -90,8 +86,9 @@
           </div>
 
           <button class="checkout-place-order" id="placeOrderBtn" disabled>Place Order</button>
+          <div id="checkoutError" style="display:none;text-align:center;font-size:0.85rem;color:#c0392b;margin-top:10px;font-weight:600;"></div>
           <div style="text-align:center;font-size:0.8rem;color:var(--accent);margin-top:10px;font-weight:600;">
-            🏷️ Have a promo code? Enter it on the next payment screen.
+            🔒 Secure crypto & card payment via PsiFi · Shipping collected on the next step
           </div>
           <div class="checkout-research-notice">
             All products are for research and laboratory use only.<br>
@@ -139,124 +136,27 @@
     </div>
   </footer>
 
-  <!-- PAYMENT DOWN OVERLAY -->
-  <div class="payment-down-overlay" id="paymentDownOverlay">
-    <div class="payment-down-modal">
-      <div class="payment-down-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l5.654-4.654m5.96-4.643.025-.022a3.976 3.976 0 0 0-.35-5.632 3.976 3.976 0 0 0-5.632-.35l-.022.025"/></svg>
-      </div>
-      <h2 class="payment-down-title">Payment System Upgrade in Progress</h2>
-      <p class="payment-down-desc">We're switching to a new payment processor to serve you better. Orders are temporarily on hold.</p>
-      <p class="payment-down-sub">Enter your email and we'll notify you the moment checkout is back online — your cart will be ready to go.</p>
-      <form id="paymentDownForm" class="payment-down-form">
-        <div class="payment-down-field">
-          <input type="email" id="paymentEmail" placeholder="your@email.com" required class="payment-down-email" autocomplete="email">
-          <button type="submit" class="payment-down-btn">Notify Me</button>
-        </div>
-      </form>
-      <div class="payment-down-success" id="paymentDownSuccess">
-        <div class="payment-down-check">✓</div>
-        <p>You're on the list! We'll email you as soon as checkout is back online.</p>
-      </div>
-      <a href="/shop" class="payment-down-back">← Continue Browsing</a>
-    </div>
-  </div>
-
   <script src="main.js"></script>
   <script src="cart.js"></script>
   <script>
   (function() {
-    // PepLab product name → Ecwid product ID mapping
-    // Required Ecwid product options keyed by cart item name
-    var ECWID_OPTIONS = {
-      'GLP-3 (RT) 10mg':            { 'Pack Size': '1 Vial' },
-      'GLP-3 (RT) 10mg — 1 Vial':  { 'Pack Size': '1 Vial' },
-      'GLP-3 (RT) 10mg — 3 Vials': { 'Pack Size': '3 Vials (20% Off)' }
-    };
-
-    var ECWID_IDS = {
-      // Canonical names (matching shop data-name attributes and ECWID catalog)
-      'GLP-3 (RT) 10mg': 826704048,
-      'GLP-3 (RT) 10mg — 1 Vial': 826704048,
-      'GLP-3 (RT) 10mg — 3 Vials': 826704048,
-      'BPC-157 5mg': 826704047,
-      'BPC-157 10mg': 826704045,
-      'TB-500 5mg': 826704043,
-      'SS-31 5mg': 826702748,
-      'Wolverine Blend': 826704504,
-      'Tirzepatide 10mg': 826704502,
-      'AOD-9604 5mg': 826703237,
-      '5-Amino-1MQ 50mg': 826703242,
-      'MOTS-c 10mg': 826704506,
-      'L-Carnitine 500mg': 826703238,
-      'Klow Blend 80mg': 826702746,
-      'Ipamorelin 10mg': 826703243,
-      'Sermorelin 5mg': 826704503,
-      'CJC-1295 No DAC 5mg': 826704042,
-      'CJC-1295 DAC 5mg': 826704046,
-      'CJC-1295 Ipamorelin Blend': 826703246,
-      'Tesamorelin 10mg': 826702749,
-      'IGF-1 LR3 1mg': 826704049,
-      'HCG 5000 IU': 826702747,
-      'Kisspeptin 10mg': 826703241,
-      'Selank 5mg': 826704501,
-      'Semax 5mg': 826703239,
-      'DSIP 5mg': 826704505,
-      'Epithalon 10mg': 826704044,
-      'NAD+ 500mg': 826703245,
-      'GHK-Cu': 826702750,
-      'Glow Blend 70mg': 826704507,
-      'MT-1 10mg': 826704508,
-      'MT-2 10mg': 826703240,
-      'Bacteriostatic Water': 826703244,
-      'Bacteriostatic Water 10mL': 826703244
-    };
-
-    // Aliases for product names from PDPs and shop h3 tags which may differ
-    var ECWID_ALIASES = {
-      'Wolverine Blend (BPC-157 + TB-500)': 'Wolverine Blend',
-      'Wolverine (BPC157/TB500 Blend)':     'Wolverine Blend',
-      'KLOW Blend (80mg)':                   'Klow Blend 80mg',
-      'KLOW 80mg (GLP/GIP + GHK-Cu Blend)': 'Klow Blend 80mg',
-      'CJC-1295 No DAC + Ipamorelin Blend':         'CJC-1295 Ipamorelin Blend',
-      'CJC-1295 No DAC + Ipamorelin (5mg/5mg)':     'CJC-1295 Ipamorelin Blend',
-      'CJC 1295 No DAC 5mg':               'CJC-1295 No DAC 5mg',
-      'Bacteriostatic Water (10mL)':        'Bacteriostatic Water'
-    };
-
-    // Resolve a cart item name to an Ecwid product ID
-    function getEcwidId(name) {
-      if (ECWID_IDS[name]) return ECWID_IDS[name];
-
-      // Try explicit alias first
-      var alias = ECWID_ALIASES[name];
-      if (alias && ECWID_IDS[alias]) return ECWID_IDS[alias];
-
-      // Normalize: "Product (Xmg)" → "Product Xmg" (handles dosage in parens at end)
-      var normalized = name.replace(/\s*\((\d[^)]+)\)\s*$/, ' $1').trim();
-      if (ECWID_IDS[normalized]) return ECWID_IDS[normalized];
-
-      return null;
-    }
-
     var cart = window.PepLabCart;
     if (!cart) return;
 
-    var items = cart.getCart();
+    var items   = cart.getCart();
     var itemsEl = document.getElementById('checkoutItems');
     var totalsEl = document.getElementById('checkoutTotals');
     var orderBtn = document.getElementById('placeOrderBtn');
-    var loadingEl = document.getElementById('ecwid-checkout-loading');
+    var errorEl  = document.getElementById('checkoutError');
 
-    // Redirect if cart empty
+    // Empty cart guard
     if (items.length === 0) {
       itemsEl.innerHTML = '<p style="font-size:0.9rem;color:var(--text-muted);padding:20px 0;">Your cart is empty. <a href="/shop" style="color:var(--accent);font-weight:600;">Browse products</a></p>';
       totalsEl.innerHTML = '';
-      if (loadingEl) loadingEl.innerHTML = '<p style="color:var(--text-muted);">Add items to your cart before checking out.</p>';
       return;
     }
 
-    // Placeholder SVG
+    // Placeholder SVG for items missing an image
     var phSVG = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.75" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714a2.25 2.25 0 0 0 .659 1.591L19 14.5M14.25 3.104c.251.023.501.05.75.082M19 14.5l-1.46 1.46a2.25 2.25 0 0 1-1.591.659H8.051a2.25 2.25 0 0 1-1.591-.659L5 14.5m14 0V5.846a2.25 2.25 0 0 0-1.172-1.976l-.348-.192M5 14.5V5.846a2.25 2.25 0 0 1 1.172-1.976l.348-.192"/></svg>';
 
     // Render order summary items
@@ -274,7 +174,7 @@
       '</div>';
     }).join('');
 
-    // Render totals
+    // Render totals (display only — server recomputes authoritatively)
     var subtotal = cart.getCartTotal();
     var freeShipping = subtotal >= 250;
     var shipping = freeShipping ? 0 : 19.99;
@@ -285,95 +185,56 @@
       '<div class="checkout-summary-row"><span>Shipping</span><span' + (freeShipping ? ' class="free"' : '') + '>' + (freeShipping ? 'FREE' : '$' + shipping.toFixed(2)) + '</span></div>' +
       '<div class="checkout-summary-row total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
 
-    function enableOrderBtn() {
-      if (loadingEl) loadingEl.style.display = 'none';
+    // Ready immediately — no SDK to wait on
+    orderBtn.disabled = false;
+    orderBtn.textContent = 'Proceed to Payment';
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
       orderBtn.disabled = false;
       orderBtn.textContent = 'Proceed to Payment';
     }
 
-    // Safety net: enable button after 6 seconds no matter what
-    var safetyTimer = setTimeout(enableOrderBtn, 6000);
-
-    // Initialize Ecwid and sync cart
-    function syncCartToEcwid() {
-      if (typeof Ecwid === 'undefined') {
-        setTimeout(syncCartToEcwid, 200);
-        return;
-      }
-
-      function doSync() {
-        Ecwid.Cart.clear(function() {
-          var toAdd = items.filter(function(item) { return !!getEcwidId(item.name); });
-
-          // If nothing maps to Ecwid, just enable the button
-          if (toAdd.length === 0) {
-            clearTimeout(safetyTimer);
-            enableOrderBtn();
-            return;
-          }
-
-          var done = 0;
-          toAdd.forEach(function(item) {
-            var productPayload = {
-              id: getEcwidId(item.name),
-              quantity: item.quantity,
-              callback: function() {
-                done++;
-                if (done >= toAdd.length) {
-                  clearTimeout(safetyTimer);
-                  enableOrderBtn();
-                }
-              }
-            };
-            if (ECWID_OPTIONS[item.name]) {
-              productPayload.options = ECWID_OPTIONS[item.name];
-            }
-            Ecwid.Cart.addProduct(productPayload);
-          });
-        });
-      }
-
-      // Handle both: API already loaded and not yet loaded
-      if (Ecwid.Cart && typeof Ecwid.Cart.clear === 'function') {
-        doSync();
-      } else {
-        Ecwid.OnAPILoaded.add(doSync);
-      }
-    }
-
-    syncCartToEcwid();
-
-    // Place order -> show payment-down modal (payment processor upgrade in progress)
+    // Place order → create PsiFi checkout session via our Netlify function
     orderBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      document.getElementById('paymentDownOverlay').classList.add('active');
-    });
+      errorEl.style.display = 'none';
+      orderBtn.disabled = true;
+      orderBtn.textContent = 'Redirecting to payment…';
 
-    // Email waitlist via Formspree
-    document.getElementById('paymentDownForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var btn = this.querySelector('.payment-down-btn');
-      var email = document.getElementById('paymentEmail').value;
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-      fetch('https://formspree.io/f/xykbrnyk', {
+      // Send only what the server needs — name + quantity.
+      // Prices are looked up server-side from the canonical catalog.
+      var payload = {
+        items: items.map(function(i) {
+          return { name: i.name, quantity: i.quantity };
+        }),
+      };
+
+      fetch('/.netlify/functions/create-checkout-session', {
         method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, source: 'payment-waitlist' })
-      }).then(function(res) { return res.json(); })
-        .then(function(data) {
-          if (data.ok) {
-            document.getElementById('paymentDownForm').style.display = 'none';
-            document.getElementById('paymentDownSuccess').style.display = 'block';
-          } else {
-            btn.disabled = false;
-            btn.textContent = 'Try Again';
-          }
-        })
-        .catch(function() {
-          btn.disabled = false;
-          btn.textContent = 'Try Again';
-        });
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(function(res) {
+        return res.json().then(function(data) { return { ok: res.ok, data: data }; });
+      })
+      .then(function(r) {
+        if (!r.ok) {
+          showError(r.data && r.data.error ? r.data.error : 'Could not start checkout. Please try again.');
+          return;
+        }
+        if (!r.data.checkout_url) {
+          showError('Payment provider did not return a checkout URL.');
+          return;
+        }
+        // Hand off to PsiFi hosted checkout
+        window.location.href = r.data.checkout_url;
+      })
+      .catch(function(err) {
+        console.error(err);
+        showError('Network error. Please check your connection and try again.');
+      });
     });
   })();
   </script>

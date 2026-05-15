@@ -1,0 +1,20 @@
+# Netlify build & function config for peplab.us
+# Static site (no build step) with serverless functions in netlify/functions
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Pretty URLs for success / cancel landing pages (no .html in URL)
+[[redirects]]
+  from = "/success"
+  to = "/success.html"
+  status = 200
+
+[[redirects]]
+  from = "/cancel"
+  to = "/cancel.html"
+  status = 200

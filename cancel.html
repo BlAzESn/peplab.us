@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Canceled | PepLab.us</title>
+  <meta name="description" content="Your checkout was canceled. Your cart is still saved if you'd like to try again.">
+  <link rel="icon" type="image/webp" href="assets/favicon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "w8by4mki8a");
+  </script>
+</head>
+<body>
+
+  <!-- AGE GATE -->
+  <div class="age-gate-overlay" id="ageGate">
+    <div class="age-gate-header">
+      <div class="age-gate-label">Welcome to</div>
+      <div class="age-gate-logo">PEPLAB<span>.US</span></div>
+      <div class="age-gate-subtitle">Research</div>
+    </div>
+    <div class="age-gate-card">
+      <div class="age-gate-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+        Age Verification Required
+      </div>
+      <h2>You Must Be 18+ to Enter</h2>
+      <p class="age-gate-desc">By entering, you accept our Terms and confirm you are of legal age to view research compounds in your jurisdiction.</p>
+      <div class="age-gate-divider"></div>
+      <div class="age-gate-stats">
+        <div class="age-gate-stat"><span class="age-gate-stat-value">99%+</span><span class="age-gate-stat-label">Purity</span></div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat"><span class="age-gate-stat-value">Lab</span><span class="age-gate-stat-label">Certified</span></div>
+        <div class="age-gate-stat-divider"></div>
+        <div class="age-gate-stat"><span class="age-gate-stat-value">Research</span><span class="age-gate-stat-label">Use Only</span></div>
+      </div>
+      <div class="age-gate-divider"></div>
+      <p class="age-gate-disclaimer">All compounds are sold for research and laboratory use only. Products are not for human consumption or medical use.</p>
+      <label class="age-gate-remember"><input type="checkbox" id="ageRemember"> Remember for 30 days</label>
+      <div class="age-gate-buttons">
+        <button class="age-gate-btn-deny" id="ageDeny">I Am Under 18</button>
+        <button class="age-gate-btn-enter" id="ageEnter">Enter Site</button>
+      </div>
+    </div>
+    <div class="age-gate-footer">&copy; 2026 PepLab.us &bull; For Research Purposes Only</div>
+  </div>
+
+  <div class="top-bar"><div class="container"><span>Free shipping on orders $250+ &nbsp;&middot;&nbsp; For research use only</span></div></div>
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="/" class="logo"><img src="assets/logo-icon.webp" alt="PepLab"></a>
+      <nav class="nav-links" id="nav">
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/about">About</a>
+        <a href="/faq">FAQ</a>
+        <a href="/test-results">Test Results</a>
+        <a href="/research-guide">Research Guide</a>
+      </nav>
+      <div class="header-actions"><a href="/shop" class="nav-cta">Shop Now</a></div>
+      <button class="mobile-toggle" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:60px;padding-bottom:60px;">
+    <div class="container" style="max-width:640px;text-align:center;">
+      <div style="width:88px;height:88px;border-radius:50%;background:rgba(255,159,67,0.12);display:inline-flex;align-items:center;justify-content:center;margin-bottom:24px;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="#ff9f43" width="44" height="44"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+      </div>
+      <h1 style="margin:0 0 16px;font-size:2.4rem;line-height:1.15;">Checkout Canceled</h1>
+      <p style="font-size:1.05rem;color:var(--text-muted);margin:0 0 12px;">No worries &mdash; nothing was charged.</p>
+      <p style="font-size:0.95rem;color:var(--text-muted);margin:0 0 32px;">Your cart is still saved if you'd like to try again, or keep browsing for more research compounds.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="/checkout" class="nav-cta" style="display:inline-block;">Return to Checkout</a>
+        <a href="/shop" style="display:inline-block;padding:12px 24px;color:var(--text);text-decoration:none;font-weight:600;border:1px solid var(--border);border-radius:8px;">Keep Shopping</a>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-top:36px;">Trouble checking out? Email <a href="mailto:contact@peplab.us" style="color:var(--accent)">contact@peplab.us</a></p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo"><img src="assets/Updated Footer logo.png" alt="PepLab"></div>
+          <p>PepLab.us is a US-based supplier of premium research peptides. All products are for laboratory and research use only. Not for human consumption.</p>
+        </div>
+        <div class="footer-col"><h4>Shop</h4><a href="/shop">All Products</a></div>
+        <div class="footer-col"><h4>Company</h4><a href="/about">About Us</a><a href="/test-results">Test Results</a><a href="/faq">FAQ</a></div>
+        <div class="footer-col"><h4>Policies</h4><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/shipping">Shipping Policy</a><a href="/refund">Refund Policy</a></div>
+      </div>
+      <div class="footer-fda"><p class="footer-fda-title">Research Use Disclaimer</p><p>All products currently listed on this site are for research purposes ONLY. All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injections, or ingestion. Peptides are strictly for laboratory, academic, or institutional research and not for human or animal consumption.</p></div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 PepLab.us. All rights reserved. For research use only.</p>
+        <p>contact@peplab.us</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="cart.js"></script>
+</body>
+</html>
