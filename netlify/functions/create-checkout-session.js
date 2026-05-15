@@ -170,17 +170,19 @@ exports.handler = async (event) => {
     items: psifiItems,
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/cancel`,
+    // PsiFi's API defaults to NFT checkout (Polygon chain) which
+    // disables Apple Pay and skips shipping collection. We sell
+    // physical goods — force a standard product checkout.
+    checkout_kind: 'standard',
+    mode: 'payment',
     // Force merchant (us) to absorb processing fees so the customer
     // pays exactly the amount shown in the order summary.
     fee_payer: 'merchant',
-    // Force PsiFi's hosted checkout to collect the customer's shipping
-    // address (Stripe-style field — PsiFi mirrors this naming).
-    // Required to unlock Apple Pay / Google Pay for physical goods.
+    // Collect shipping address on the PsiFi-hosted checkout page.
+    // Multiple field aliases — PsiFi accepts whichever they recognize.
     shipping_address_collection: {
       allowed_countries: ['US'],
     },
-    // Also try alternate field names PsiFi may use — they'll ignore
-    // any they don't recognize, accept the one they do.
     collect_shipping_address: true,
     collect_billing_address: true,
     metadata: {
