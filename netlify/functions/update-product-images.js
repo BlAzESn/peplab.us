@@ -52,13 +52,9 @@ const UPDATES = [
 
 const PSIFI = 'https://api.psifi.app/api/v2';
 
-async function updateOne(apiKey, { id, img }) {
-  // PATCH the images field. PsiFi's product object exposes images:[] in
-  // GET responses, so we send the same field on update. If they want a
-  // different shape (objects, "image_url" singular, etc.) the error
-  // message will tell us and we'll iterate.
+async function tryUpdate(apiKey, id, img, method) {
   const r = await fetch(`${PSIFI}/products/${encodeURIComponent(id)}`, {
-    method: 'PATCH',
+    method,
     headers: {
       'x-api-key': apiKey,
       'Idempotency-Key': crypto.randomUUID(),
@@ -67,7 +63,18 @@ async function updateOne(apiKey, { id, img }) {
     body: JSON.stringify({ images: [img] }),
   });
   const body = await r.json();
-  return { ok: r.ok, status: r.status, body };
+  return { ok: r.ok, status: r.status, body, method };
+}
+
+async function updateOne(apiKey, { id, img }) {
+  // PsiFi rejected PATCH with "No such resource". Try PUT first (REST
+  // standard for resource update), fall back to POST (Stripe-style) if
+  // PUT also returns 404/405.
+  let res = await tryUpdate(apiKey, id, img, 'PUT');
+  if (!res.ok && (res.status === 404 || res.status === 405)) {
+    res = await tryUpdate(apiKey, id, img, 'POST');
+  }
+  return res;
 }
 
 exports.handler = async () => {
