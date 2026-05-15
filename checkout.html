@@ -127,8 +127,11 @@
 
           <button class="checkout-place-order" id="placeOrderBtn" disabled>Place Order</button>
           <div id="checkoutError" style="display:none;text-align:center;font-size:0.85rem;color:#c0392b;margin-top:10px;font-weight:600;"></div>
+          <div id="mobileApplePayNotice" style="display:none;text-align:center;font-size:0.85rem;color:#b46c00;background:#fff4e0;border:1px solid #ffd791;padding:10px 12px;border-radius:6px;margin-top:12px;font-weight:600;line-height:1.4;">
+            📱 On mobile, please pay with <strong>card</strong>. Apple Pay is temporarily unavailable on mobile while we finalize the integration. Card payment works normally.
+          </div>
           <div style="text-align:center;font-size:0.8rem;color:var(--accent);margin-top:10px;font-weight:600;">
-            🔒 Secure crypto & card payment via PsiFi · Shipping collected on the next step
+            🔒 Secure payment via PsiFi
           </div>
           <div class="checkout-research-notice">
             All products are for research and laboratory use only.<br>
@@ -213,6 +216,15 @@
       opt.textContent = s[1];
       stateSelect.appendChild(opt);
     });
+
+    // Show mobile-only Apple Pay notice (mobile Apple Pay currently
+    // auto-rejects on PsiFi's hosted checkout — known limitation,
+    // pending PsiFi support response). Card works fine on mobile.
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
+      var notice = document.getElementById('mobileApplePayNotice');
+      if (notice) notice.style.display = 'block';
+    }
 
     // Restore saved shipping data so customers don't have to re-type on retry
     try {
