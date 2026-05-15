@@ -166,23 +166,20 @@ exports.handler = async (event) => {
     event.headers['origin'] ||
     `https://${event.headers['host'] || 'peplab.us'}`;
 
+  // PsiFi has TWO distinct checkout products:
+  //   1. /checkout-sessions — only for onramp / NFT / gaming (no Apple Pay, no shipping)
+  //   2. /payment-links — for physical goods with shipping + Apple Pay (what we need)
+  // Dashboard-created payment links use #2 and work correctly. Use the
+  // same endpoint via API.
   const psifiBody = {
     items: psifiItems,
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/cancel`,
-    // PsiFi's API defaults to NFT checkout (Polygon chain) which
-    // disables Apple Pay and skips shipping collection. We sell
-    // physical goods — force a standard product checkout.
-    checkout_kind: 'standard',
-    mode: 'payment',
-    // Force merchant (us) to absorb processing fees so the customer
-    // pays exactly the amount shown in the order summary.
     fee_payer: 'merchant',
-    // Collect shipping address on the PsiFi-hosted checkout page.
-    // Multiple field aliases — PsiFi accepts whichever they recognize.
-    shipping_address_collection: {
-      allowed_countries: ['US'],
-    },
+    // Best-guess address collection fields; PsiFi will ignore any it
+    // doesn't recognize. If shipping form doesn't appear, log will
+    // show the actual fields needed on this endpoint.
+    shipping_address_collection: { allowed_countries: ['US'] },
     collect_shipping_address: true,
     collect_billing_address: true,
     metadata: {
@@ -198,7 +195,7 @@ exports.handler = async (event) => {
 
   let psifiRes, psifiData;
   try {
-    psifiRes = await fetch('https://api.psifi.app/api/v2/checkout-sessions', {
+    psifiRes = await fetch('https://api.psifi.app/api/v2/payment-links', {
       method: 'POST',
       headers: {
         'x-api-key': apiKey,
