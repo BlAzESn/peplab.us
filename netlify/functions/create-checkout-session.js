@@ -166,19 +166,19 @@ exports.handler = async (event) => {
     event.headers['origin'] ||
     `https://${event.headers['host'] || 'peplab.us'}`;
 
-  // PsiFi has TWO distinct checkout products:
-  //   1. /checkout-sessions — only for onramp / NFT / gaming (no Apple Pay, no shipping)
-  //   2. /payment-links — for physical goods with shipping + Apple Pay (what we need)
-  // Dashboard-created payment links use #2 and work correctly. Use the
-  // same endpoint via API.
+  // PsiFi's public API only supports /checkout-sessions, and its three
+  // checkout_kinds are: onramp, nft, gaming. Payment-links (dashboard
+  // feature) is not exposed via API. "onramp" is the closest to what
+  // we need: customer pays with card / Apple Pay / Google Pay (fiat),
+  // PsiFi converts to crypto, merchant receives crypto. That's PsiFi's
+  // core product. nft mode disabled Apple Pay because NFTs have no
+  // physical shipping; onramp should preserve Apple Pay + shipping.
   const psifiBody = {
     items: psifiItems,
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/cancel`,
+    checkout_kind: 'onramp',
     fee_payer: 'merchant',
-    // Best-guess address collection fields; PsiFi will ignore any it
-    // doesn't recognize. If shipping form doesn't appear, log will
-    // show the actual fields needed on this endpoint.
     shipping_address_collection: { allowed_countries: ['US'] },
     collect_shipping_address: true,
     collect_billing_address: true,
@@ -195,7 +195,7 @@ exports.handler = async (event) => {
 
   let psifiRes, psifiData;
   try {
-    psifiRes = await fetch('https://api.psifi.app/api/v2/payment-links', {
+    psifiRes = await fetch('https://api.psifi.app/api/v2/checkout-sessions', {
       method: 'POST',
       headers: {
         'x-api-key': apiKey,
