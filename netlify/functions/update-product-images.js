@@ -60,7 +60,7 @@ async function tryUpdate(apiKey, id, img, method) {
       'Idempotency-Key': crypto.randomUUID(),
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ images: [img] }),
+    body: JSON.stringify({ images: [{ url: img }] }),
   });
   const body = await r.json();
   return { ok: r.ok, status: r.status, body, method };
