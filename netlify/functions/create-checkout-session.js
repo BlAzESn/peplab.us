@@ -173,11 +173,17 @@ exports.handler = async (event) => {
   // PsiFi converts to crypto, merchant receives crypto. That's PsiFi's
   // core product. nft mode disabled Apple Pay because NFTs have no
   // physical shipping; onramp should preserve Apple Pay + shipping.
+  // PsiFi routing: every checkout_kind has its own set of valid
+  // payment_method values. cardpay is an NFT method (requires nft kind).
+  // Banxa is an onramp aggregator that supports card / Apple Pay /
+  // Google Pay and collects shipping address natively — same path the
+  // dashboard-created payment links use.
   const psifiBody = {
     items: psifiItems,
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/cancel`,
     checkout_kind: 'onramp',
+    payment_method: 'banxa',
     fee_payer: 'merchant',
     shipping_address_collection: { allowed_countries: ['US'] },
     collect_shipping_address: true,
