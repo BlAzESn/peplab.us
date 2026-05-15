@@ -113,6 +113,18 @@ exports.handler = async (event) => {
     return json(400, { error: 'Cart is empty' });
   }
 
+  // Shipping address collected on peplab.us. PsiFi's cardpay flow doesn't
+  // prompt for it, so we capture it ourselves and pass it through via
+  // customer_* fields + metadata for the fulfillment side.
+  const ship = (payload.shipping && typeof payload.shipping === 'object') ? payload.shipping : null;
+  if (!ship) return json(400, { error: 'Shipping address missing' });
+  const requiredShip = ['email', 'firstName', 'lastName', 'phone', 'address1', 'city', 'state', 'zip'];
+  for (const f of requiredShip) {
+    if (!ship[f] || typeof ship[f] !== 'string' || !ship[f].trim()) {
+      return json(400, { error: `Missing shipping field: ${f}` });
+    }
+  }
+
   // Resolve every cart item against the catalog
   const psifiItems = [];
   const auditItems = [];
@@ -184,12 +196,26 @@ exports.handler = async (event) => {
     checkout_kind: 'nft',
     payment_method: 'cardpay',
     fee_payer: 'merchant',
+    // Pre-fill customer fields on PsiFi's hosted page from our form
+    customer_email: ship.email,
+    customer_name: `${ship.firstName} ${ship.lastName}`.trim(),
+    // Stash full shipping address in metadata so the fulfillment side
+    // (webhook / order export) has everything needed to ship the order
     metadata: {
       source: 'peplab.us',
       cart_subtotal: subtotal.toFixed(2),
       cart_shipping: shippingCost.toFixed(2),
       cart_total: (subtotal + shippingCost).toFixed(2),
       items_snapshot: JSON.stringify(auditItems),
+      ship_name: `${ship.firstName} ${ship.lastName}`.trim(),
+      ship_email: ship.email,
+      ship_phone: ship.phone,
+      ship_address1: ship.address1,
+      ship_address2: ship.address2 || '',
+      ship_city: ship.city,
+      ship_state: ship.state,
+      ship_zip: ship.zip,
+      ship_country: 'US',
     },
   };
 

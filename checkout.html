@@ -75,6 +75,46 @@
       <a href="/shop" class="pdp-back">&larr; Back to Shop</a>
 
       <div class="checkout-layout checkout-layout--single">
+
+        <!-- SHIPPING FORM -->
+        <div class="checkout-summary" id="shippingFormBox" style="margin-bottom:20px;">
+          <div class="checkout-summary-title">Shipping Information</div>
+          <form id="shippingForm" autocomplete="on" novalidate style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <label style="grid-column:1/-1;font-size:0.85rem;">Email
+              <input required type="email" name="email" autocomplete="email" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="font-size:0.85rem;">First name
+              <input required type="text" name="firstName" autocomplete="given-name" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="font-size:0.85rem;">Last name
+              <input required type="text" name="lastName" autocomplete="family-name" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="grid-column:1/-1;font-size:0.85rem;">Phone
+              <input required type="tel" name="phone" autocomplete="tel" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="grid-column:1/-1;font-size:0.85rem;">Address line 1
+              <input required type="text" name="address1" autocomplete="address-line1" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="grid-column:1/-1;font-size:0.85rem;">Address line 2 <span style="color:var(--text-muted);font-weight:400;">(optional)</span>
+              <input type="text" name="address2" autocomplete="address-line2" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="font-size:0.85rem;">City
+              <input required type="text" name="city" autocomplete="address-level2" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="font-size:0.85rem;">State
+              <select required name="state" autocomplete="address-level1" id="stateSelect" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;background:#fff;">
+                <option value="">Select…</option>
+              </select>
+            </label>
+            <label style="font-size:0.85rem;">ZIP
+              <input required type="text" name="zip" autocomplete="postal-code" inputmode="numeric" pattern="\d{5}(-?\d{4})?" style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;">
+            </label>
+            <label style="font-size:0.85rem;">Country
+              <input type="text" value="United States" disabled style="width:100%;padding:10px 12px;margin-top:4px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;background:#f6f6f6;color:var(--text-muted);">
+            </label>
+          </form>
+        </div>
+
         <!-- ORDER SUMMARY -->
         <div class="checkout-summary" id="checkoutSummary">
           <div class="checkout-summary-title">Order Summary</div>
@@ -148,6 +188,40 @@
     var totalsEl = document.getElementById('checkoutTotals');
     var orderBtn = document.getElementById('placeOrderBtn');
     var errorEl  = document.getElementById('checkoutError');
+    var shippingForm = document.getElementById('shippingForm');
+
+    // Populate US states dropdown
+    var US_STATES = [
+      ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],
+      ['CA','California'],['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],
+      ['DC','District of Columbia'],['FL','Florida'],['GA','Georgia'],['HI','Hawaii'],
+      ['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],
+      ['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],
+      ['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],
+      ['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],
+      ['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],
+      ['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],
+      ['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],
+      ['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['UT','Utah'],
+      ['VT','Vermont'],['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],
+      ['WI','Wisconsin'],['WY','Wyoming']
+    ];
+    var stateSelect = document.getElementById('stateSelect');
+    US_STATES.forEach(function(s) {
+      var opt = document.createElement('option');
+      opt.value = s[0];
+      opt.textContent = s[1];
+      stateSelect.appendChild(opt);
+    });
+
+    // Restore saved shipping data so customers don't have to re-type on retry
+    try {
+      var saved = JSON.parse(localStorage.getItem('peplab_shipping') || '{}');
+      Object.keys(saved).forEach(function(k) {
+        var f = shippingForm.elements[k];
+        if (f) f.value = saved[k];
+      });
+    } catch (e) { /* ignore */ }
 
     // Empty cart guard
     if (items.length === 0) {
@@ -196,19 +270,51 @@
       orderBtn.textContent = 'Proceed to Payment';
     }
 
-    // Place order → create PsiFi checkout session via our Netlify function
+    function collectShipping() {
+      var data = {};
+      var fields = ['email','firstName','lastName','phone','address1','address2','city','state','zip'];
+      fields.forEach(function(f) {
+        data[f] = (shippingForm.elements[f].value || '').trim();
+      });
+      return data;
+    }
+
+    function validateShipping(s) {
+      var required = ['email','firstName','lastName','phone','address1','city','state','zip'];
+      for (var i = 0; i < required.length; i++) {
+        if (!s[required[i]]) return 'Please fill in all required shipping fields.';
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email)) return 'Please enter a valid email address.';
+      if (!/^\d{5}(-?\d{4})?$/.test(s.zip)) return 'Please enter a valid US ZIP code.';
+      return null;
+    }
+
+    // Place order → validate shipping → create PsiFi session
     orderBtn.addEventListener('click', function(e) {
       e.preventDefault();
       errorEl.style.display = 'none';
+
+      var shipping = collectShipping();
+      var err = validateShipping(shipping);
+      if (err) {
+        errorEl.textContent = err;
+        errorEl.style.display = 'block';
+        // Scroll the form into view so they can see the issue
+        document.getElementById('shippingFormBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      // Persist for retry / future visits
+      try { localStorage.setItem('peplab_shipping', JSON.stringify(shipping)); } catch (e2) { /* ignore */ }
+
       orderBtn.disabled = true;
       orderBtn.textContent = 'Redirecting to payment…';
 
-      // Send only what the server needs — name + quantity.
-      // Prices are looked up server-side from the canonical catalog.
       var payload = {
         items: items.map(function(i) {
           return { name: i.name, quantity: i.quantity };
         }),
+        shipping: shipping,
       };
 
       fetch('/.netlify/functions/create-checkout-session', {
