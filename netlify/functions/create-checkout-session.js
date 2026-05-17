@@ -113,17 +113,8 @@ exports.handler = async (event) => {
     return json(400, { error: 'Cart is empty' });
   }
 
-  // Shipping address collected on peplab.us. PsiFi's cardpay flow doesn't
-  // prompt for it, so we capture it ourselves and pass it through via
-  // customer_* fields + metadata for the fulfillment side.
-  const ship = (payload.shipping && typeof payload.shipping === 'object') ? payload.shipping : null;
-  if (!ship) return json(400, { error: 'Shipping address missing' });
-  const requiredShip = ['email', 'firstName', 'lastName', 'phone', 'address1', 'city', 'state', 'zip'];
-  for (const f of requiredShip) {
-    if (!ship[f] || typeof ship[f] !== 'string' || !ship[f].trim()) {
-      return json(400, { error: `Missing shipping field: ${f}` });
-    }
-  }
+  // Shipping address + customer details are collected by PsiFi/Banxa
+  // on the hosted onramp checkout page — we don't collect them here.
 
   // Resolve every cart item against the catalog
   const psifiItems = [];
@@ -178,44 +169,23 @@ exports.handler = async (event) => {
     event.headers['origin'] ||
     `https://${event.headers['host'] || 'peplab.us'}`;
 
-  // PsiFi's public API only supports /checkout-sessions, and its three
-  // checkout_kinds are: onramp, nft, gaming. Payment-links (dashboard
-  // feature) is not exposed via API. "onramp" is the closest to what
-  // we need: customer pays with card / Apple Pay / Google Pay (fiat),
-  // PsiFi converts to crypto, merchant receives crypto. That's PsiFi's
-  // core product. nft mode disabled Apple Pay because NFTs have no
-  // physical shipping; onramp should preserve Apple Pay + shipping.
-  // Back to cardpay/nft path (PsiFi's default). User enabled global
-  // "default shipping address collection" in PsiFi dashboard — hoping
-  // that toggle cascades into API-created sessions so cardpay sessions
-  // now prompt for shipping.
+  // Onramp checkout via Banxa: customer pays with card / Apple Pay /
+  // Google Pay (fiat), Banxa handles shipping-address collection and
+  // identity, PsiFi settles crypto to the merchant. cardpay was
+  // disabled on the account, so onramp/banxa is the active path.
   const psifiBody = {
     items: psifiItems,
     success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/cancel`,
-    checkout_kind: 'nft',
-    payment_method: 'cardpay',
+    checkout_kind: 'onramp',
+    payment_method: 'banxa',
     fee_payer: 'merchant',
-    // Pre-fill customer fields on PsiFi's hosted page from our form
-    customer_email: ship.email,
-    customer_name: `${ship.firstName} ${ship.lastName}`.trim(),
-    // Stash full shipping address in metadata so the fulfillment side
-    // (webhook / order export) has everything needed to ship the order
     metadata: {
       source: 'peplab.us',
       cart_subtotal: subtotal.toFixed(2),
       cart_shipping: shippingCost.toFixed(2),
       cart_total: (subtotal + shippingCost).toFixed(2),
       items_snapshot: JSON.stringify(auditItems),
-      ship_name: `${ship.firstName} ${ship.lastName}`.trim(),
-      ship_email: ship.email,
-      ship_phone: ship.phone,
-      ship_address1: ship.address1,
-      ship_address2: ship.address2 || '',
-      ship_city: ship.city,
-      ship_state: ship.state,
-      ship_zip: ship.zip,
-      ship_country: 'US',
     },
   };
 
